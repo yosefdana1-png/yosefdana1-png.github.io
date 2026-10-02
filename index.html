@@ -130,6 +130,14 @@
     border: 1px dashed var(--line-strong);
     cursor: default;
   }
+  .store.beta {
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--ink);
+  }
+  .store.beta small { color: var(--gold); opacity: 1; font-weight: 600; }
+  .beta-note { margin: 12px 0 0; font-size: 14px; color: var(--muted); }
+  .beta-note + .privacy { margin-top: 8px; }
   /* במכשיר אנדרואיד כפתור Google Play יופיע ראשון */
   .is-android .store.play { order: -1; }
 
@@ -168,12 +176,13 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8C7 7.4 5.5 8.3 4.7 9.8c-1.7 2.9-.4 7.2 1.2 9.5.8 1.1 1.7 2.4 2.9 2.4 1.2 0 1.6-.8 3-.8s1.8.8 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.7 0 0-2.5-1-2.5-4zM14.1 5.6c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3z"/></svg>
         <span><small>להורדה מ־</small><strong>App Store</strong></span>
       </a>
-      <!-- כשיהיה קישור: החלף את ה-div ב- <a class="store play" href="הקישור" target="_blank" rel="noopener"> וסגור ב- </a>, ושנה "בקרוב ב־" ל"להורדה מ־" -->
-      <div class="store play soon" aria-disabled="true">
+      <!-- בטא: כשהגרסה תצא רשמית, החלף את הקישור לקישור של Google Play, הסר את המחלקה beta ושנה "גרסת בטא ב־" ל"להורדה מ־" -->
+      <a class="store play beta" href="https://groups.google.com/g/beta-inventory-app" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.8v18.4c0 .4.4.7.8.5l15.6-9.2c.4-.2.4-.8 0-1L4.8 2.3c-.4-.2-.8.1-.8.5z"/></svg>
-        <span><small>בקרוב ב־</small><strong>Google Play</strong></span>
-      </div>
+        <span><small>גרסת בטא ב־</small><strong>Google Play</strong></span>
+      </a>
     </div>
+    <p class="beta-note">לבטא באנדרואיד: מצטרפים לקבוצה, ובדף הקבוצה מחכה הקישור להורדה</p>
     <a class="privacy" href="https://yosefdana1-png.github.io/inventory-app/privacy.html" target="_blank" rel="noopener">מדיניות פרטיות</a>
   </section>
 
@@ -199,7 +208,7 @@
 
   <footer>
     <p>שאלות ותמיכה: <a href="mailto:danastudio.apps@gmail.com">danastudio.apps@gmail.com</a></p>
-    <p>© 2026 Dana Studio</p>
+    <p dir="ltr">© 2026 Yosef Dana</p>
   </footer>
 
 </main>
