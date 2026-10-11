@@ -107,7 +107,9 @@
   /* ===== כפתורי חנויות ===== */
   .stores { display: flex; gap: 10px; flex-wrap: wrap; }
   .store {
-    flex: 1 1 150px;
+    /* Fixed half-row width: a single button keeps the same size and leaves the other half empty */
+    flex: 0 1 calc(50% - 5px);
+    min-width: 150px;
     display: flex; align-items: center; gap: 10px;
     min-height: 54px;
     padding: 8px 16px;
@@ -183,7 +185,7 @@
       </a>
     </div>
     <p class="beta-note">לבטא באנדרואיד: מצטרפים לקבוצה, ובדף הקבוצה מחכה הקישור להורדה</p>
-    <a class="privacy" href="https://yosefdana1-png.github.io/inventory-app/privacy.html" target="_blank" rel="noopener">מדיניות פרטיות</a>
+    <a class="privacy" href="inventory/privacy.html">מדיניות פרטיות</a>
   </section>
 
   <!-- ================= אפליקציה: מילים ================= -->
@@ -199,7 +201,7 @@
         <span><small>להורדה מ־</small><strong>App Store</strong></span>
       </a>
     </div>
-    <a class="privacy" href="https://yosefdana1-png.github.io/legal/" target="_blank" rel="noopener">מדיניות פרטיות</a>
+    <a class="privacy" href="milim/privacy.html">מדיניות פרטיות</a>
   </section>
 
   <!-- ================= אפליקציה: Ringo ================= -->
@@ -216,9 +218,9 @@
         <span><small>בקרוב ב־</small><strong>App Store</strong></span>
       </div>
     </div>
-    <a class="privacy" href="https://yosefdana1-png.github.io/ringo/privacy.html" target="_blank" rel="noopener">מדיניות פרטיות</a>
+    <a class="privacy" href="ringo/privacy.html">מדיניות פרטיות</a>
     <span class="privacy" aria-hidden="true">·</span>
-    <a class="privacy" href="https://yosefdana1-png.github.io/ringo/support.html" target="_blank" rel="noopener">תמיכה</a>
+    <a class="privacy" href="ringo/support.html">תמיכה</a>
   </section>
 
   <footer>
