@@ -82,31 +82,73 @@
   document.addEventListener('DOMContentLoaded', openShotsOnWide);
   wide.addEventListener('change', openShotsOnWide);
 
-  // Tap a screenshot to see it large; arrows move within the same app, Esc closes.
-  var viewer, viewerImg, shots = [], index = 0;
+  // Tap a screenshot to see it large. Next / previous with the side buttons,
+  // the arrow keys or a swipe; Esc, × or a tap outside the picture closes.
+  var CHEVRON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>';
+  var LABELS = {
+    he: { close: 'סגירה', prev: 'הקודם', next: 'הבא' },
+    en: { close: 'Close', prev: 'Previous', next: 'Next' }
+  };
+  var viewer, viewerImg, viewerCount, shots = [], index = 0;
+
   function show(i) {
     index = (i + shots.length) % shots.length;
     viewerImg.src = shots[index].getAttribute('data-full') || shots[index].src;
     viewerImg.alt = shots[index].alt;
+    viewerCount.textContent = (index + 1) + ' / ' + shots.length;
+  }
+  // step +1 is always "next" in reading order; on screen that is left in Hebrew, right in English.
+  function screenStep(towardRight) {
+    return (root.dir === 'rtl') === towardRight ? -1 : 1;
+  }
+  function buildViewer() {
+    viewer = document.createElement('dialog');
+    viewer.className = 'viewer';
+    viewer.innerHTML =
+      '<figure><img alt=""><figcaption></figcaption></figure>' +
+      '<button type="button" class="v-close">×</button>' +
+      '<button type="button" class="v-nav v-prev" data-step="-1">' + CHEVRON + '</button>' +
+      '<button type="button" class="v-nav v-next" data-step="1">' + CHEVRON + '</button>';
+    viewerImg = viewer.querySelector('img');
+    viewerCount = viewer.querySelector('figcaption');
+
+    viewer.addEventListener('click', function (e) {
+      var nav = e.target.closest('.v-nav');
+      if (nav) { show(index + Number(nav.getAttribute('data-step'))); return; }
+      if (e.target === viewerImg) return;
+      viewer.close();
+    });
+    viewer.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') show(index + screenStep(true));
+      else if (e.key === 'ArrowLeft') show(index + screenStep(false));
+    });
+
+    var startX = null, startY = 0;
+    viewer.addEventListener('touchstart', function (e) {
+      startX = e.touches[0].clientX; startY = e.touches[0].clientY;
+    }, { passive: true });
+    viewer.addEventListener('touchend', function (e) {
+      if (startX === null) return;
+      var dx = e.changedTouches[0].clientX - startX, dy = e.changedTouches[0].clientY - startY;
+      startX = null;
+      if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+      // Swiping the picture to the left brings in the one on its right, and vice versa.
+      show(index + screenStep(dx < 0));
+    });
+
+    document.body.appendChild(viewer);
   }
   function openViewer(img) {
-    if (!viewer) {
-      viewer = document.createElement('dialog');
-      viewer.className = 'viewer';
-      viewer.innerHTML = '<img alt=""><button type="button" aria-label="Close">×</button>';
-      viewerImg = viewer.querySelector('img');
-      viewer.addEventListener('click', function () { viewer.close(); });
-      viewer.addEventListener('keydown', function (e) {
-        var step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
-        if (!step) return;
-        if (root.dir === 'rtl') step = -step;
-        show(index + step);
-      });
-      document.body.appendChild(viewer);
-    }
+    if (!viewer) buildViewer();
+    var t = LABELS[root.lang] || LABELS.he;
+    viewer.querySelector('.v-close').setAttribute('aria-label', t.close);
+    viewer.querySelector('.v-prev').setAttribute('aria-label', t.prev);
+    viewer.querySelector('.v-next').setAttribute('aria-label', t.next);
+
     shots = Array.prototype.filter.call(img.parentNode.querySelectorAll('img'), function (el) {
       return el.offsetParent !== null;
     });
+    viewer.classList.toggle('single', shots.length < 2);
     show(shots.indexOf(img));
     viewer.showModal();
   }
