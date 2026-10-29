@@ -126,42 +126,82 @@ a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--accent) 4
 .app-links { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 14px; font-size: 14px; }
 .app-links a { color: var(--muted); }
 
-/* Store buttons */
-.stores { display: flex; gap: 10px; flex-wrap: wrap; }
-.store {
-  /* Half-row width: a single button keeps the same size */
-  flex: 0 1 calc(50% - 5px);
-  min-width: 150px; min-height: 54px;
-  display: flex; align-items: center; gap: 10px;
-  padding: 8px 16px; border-radius: 12px;
-  text-decoration: none;
-  background: var(--btn); color: var(--btn-text); border: 1px solid var(--btn);
+/* Store buttons: Apple's official badge, and matching buttons for Google Play beta / coming soon */
+.stores { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.badge, .store {
+  flex: none; width: 156px; height: 52px; border-radius: 9px;
   transition: transform .2s var(--ease), box-shadow .2s var(--ease);
 }
-.store:active { transform: scale(.98); }
-.store svg { flex: none; width: 22px; height: 22px; fill: currentColor; }
+.badge { display: block; line-height: 0; }
+.badge img { display: block; width: 100%; height: 100%; }
+.badge .on-dark { display: none; }
+:root[data-theme="dark"] .badge .on-light { display: none; }
+:root[data-theme="dark"] .badge .on-dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .badge .on-light { display: none; }
+  :root:not([data-theme]) .badge .on-dark { display: block; }
+}
+.store {
+  display: flex; align-items: center; gap: 8px;
+  padding: 6px 12px;
+  text-decoration: none;
+  background: var(--btn); color: var(--btn-text); border: 1px solid var(--btn);
+}
+.badge:active, .store:active { transform: scale(.98); }
+.store svg { flex: none; width: 20px; height: 20px; fill: currentColor; }
 .store span { display: flex; flex-direction: column; line-height: 1.2; }
-.store small { font-size: 12px; opacity: .8; }
-.store strong { font-size: 17px; }
+.store small { font-size: 11px; opacity: .8; }
+.store strong { font-size: 16px; }
 .store.soon { background: transparent; color: var(--muted); border: 1px dashed var(--line-strong); cursor: default; }
 .store.beta { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
 .store.beta small { color: var(--accent); opacity: 1; font-weight: 600; }
 .beta-note { margin: 12px 0 0; font-size: 14px; color: var(--muted); }
-/* Screenshots: a swipeable strip that runs to the screen edge */
+/* Screenshots. Phone: collapsed under a small button, a swipeable strip when open.
+   Wide screens: always open, three small shots at the top of the card.
+   Tapping a shot opens it large (site.js). */
+.shots-box, .shots-box:last-of-type { margin-top: 16px; padding: 0; border: 0; }
+.shots-box > summary {
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 36px; padding: 6px 14px;
+  border: 1px solid var(--line-strong); border-radius: 999px;
+  color: var(--ink); font-size: 14px; font-weight: 600;
+  cursor: pointer; list-style: none; user-select: none;
+}
+.shots-box > summary::-webkit-details-marker { display: none; }
+.shots-box > summary svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; transition: transform .2s var(--ease); }
+.shots-box[open] > summary svg { transform: rotate(180deg); }
 .shots {
-  display: flex; gap: 10px;
-  margin: 22px -22px 0; padding: 2px 22px 6px;
+  display: flex; gap: 8px;
+  margin: 12px -22px 0; padding: 2px 22px 4px;
   overflow-x: auto; overscroll-behavior-x: contain;
   scroll-snap-type: x mandatory; scroll-padding-inline: 22px;
   scrollbar-width: none;
 }
 .shots::-webkit-scrollbar { display: none; }
 .shots img {
-  flex: none; width: 150px; height: auto; aspect-ratio: 414 / 900;
-  border-radius: 18px; scroll-snap-align: start;
+  flex: none; width: 112px; height: auto; aspect-ratio: 414 / 900;
+  border-radius: 14px; scroll-snap-align: start; cursor: zoom-in;
   background: var(--soft);
   box-shadow: 0 0 0 1px var(--line);
 }
+
+/* Large view of one screenshot */
+.viewer {
+  border: 0; padding: 0; background: transparent; max-width: none; max-height: none;
+  width: 100%; height: 100%; display: grid; place-items: center;
+}
+.viewer:not([open]) { display: none; }
+.viewer::backdrop { background: rgba(0, 0, 0, .82); }
+.viewer img {
+  max-width: min(92vw, 414px); max-height: 88vh; width: auto; height: auto;
+  border-radius: 22px; box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+}
+.viewer button {
+  position: fixed; top: max(16px, env(safe-area-inset-top)); inset-inline-end: 16px;
+  width: 44px; height: 44px; border-radius: 50%; border: 0;
+  background: rgba(255, 255, 255, .14); color: #fff; font-size: 24px; line-height: 1; cursor: pointer;
+}
+
 /* On Android the Google Play button comes first */
 .is-android .store.play { order: -1; }
 
@@ -227,10 +267,13 @@ footer p { margin: 6px 0; }
   .app-head { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 12px; }
   .app-name { font-size: 24px; }
   .app-desc { margin-bottom: 24px; }
-  .stores { flex-direction: column; }
-  .store { flex: 0 0 auto; width: 100%; min-width: 0; }
-  .shots { margin: 22px -28px 0; padding: 2px 28px 6px; scroll-padding-inline: 28px; scrollbar-width: thin; }
-  .shots img { width: calc((100% - 10px) / 2); }
+  .shots-box { order: -1; margin: 0 0 22px; }
+  .shots-box > summary { display: none; }
+  .shots {
+    margin: 0; padding: 0; overflow: hidden;
+    display: grid; grid-auto-flow: column; grid-auto-columns: calc((100% - 16px) / 3); gap: 8px;
+  }
+  .shots img { width: 100%; border-radius: 12px; }
   .app-links { margin-top: auto; padding-top: 18px; }
 
   /* Privacy / support: title column beside the text */
@@ -251,15 +294,15 @@ footer p { margin: 6px 0; }
 }
 
 ::selection { background: color-mix(in srgb, var(--accent) 25%, transparent); color: var(--ink); }
-a:focus-visible, button:focus-visible, summary:focus-visible, .store:focus-visible {
+a:focus-visible, button:focus-visible, summary:focus-visible {
   outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
 }
-.store:focus-visible { border-radius: 12px; }
+.badge:focus-visible, .store:focus-visible { border-radius: 9px; }
 .pill:focus-visible { border-radius: 999px; }
 @media (hover: hover) {
-  a.store:hover { transform: translateY(-1px); box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--ink) 45%, transparent); }
+  a.store:hover, a.badge:hover { transform: translateY(-1px); box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--ink) 45%, transparent); }
   .pill:hover { border-color: var(--ink); background: var(--soft); }
   .page-nav a:not([aria-current]):hover, .app-links a:hover { color: var(--ink); }
   a:hover { text-decoration-thickness: 2px; }
 }
-@media (prefers-reduced-motion: reduce) { .store, .pill { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .store, .badge, .pill { transition: none; } }

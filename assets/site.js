@@ -59,12 +59,57 @@
       if (next) next.focus({ preventScroll: true });
       return;
     }
+    var shot = e.target.closest('.shots img');
+    if (shot) {
+      openViewer(shot);
+      return;
+    }
     if (e.target.closest('[data-toggle-theme]')) {
       var theme = currentTheme() === 'dark' ? 'light' : 'dark';
       applyTheme(theme);
       save('theme', theme);
     }
   });
+
+  // ===== Screenshots =====
+  // Always open on wide screens; on phones they stay folded until tapped.
+  var wide = window.matchMedia('(min-width: 900px)');
+  function openShotsOnWide() {
+    if (!wide.matches) return;
+    var boxes = document.querySelectorAll('.shots-box');
+    for (var i = 0; i < boxes.length; i++) boxes[i].open = true;
+  }
+  document.addEventListener('DOMContentLoaded', openShotsOnWide);
+  wide.addEventListener('change', openShotsOnWide);
+
+  // Tap a screenshot to see it large; arrows move within the same app, Esc closes.
+  var viewer, viewerImg, shots = [], index = 0;
+  function show(i) {
+    index = (i + shots.length) % shots.length;
+    viewerImg.src = shots[index].getAttribute('data-full') || shots[index].src;
+    viewerImg.alt = shots[index].alt;
+  }
+  function openViewer(img) {
+    if (!viewer) {
+      viewer = document.createElement('dialog');
+      viewer.className = 'viewer';
+      viewer.innerHTML = '<img alt=""><button type="button" aria-label="Close">×</button>';
+      viewerImg = viewer.querySelector('img');
+      viewer.addEventListener('click', function () { viewer.close(); });
+      viewer.addEventListener('keydown', function (e) {
+        var step = { ArrowRight: 1, ArrowLeft: -1 }[e.key];
+        if (!step) return;
+        if (root.dir === 'rtl') step = -step;
+        show(index + step);
+      });
+      document.body.appendChild(viewer);
+    }
+    shots = Array.prototype.filter.call(img.parentNode.querySelectorAll('img'), function (el) {
+      return el.offsetParent !== null;
+    });
+    show(shots.indexOf(img));
+    viewer.showModal();
+  }
 
   window.addEventListener('hashchange', function () {
     var lang = fromHash();
