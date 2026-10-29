@@ -147,6 +147,21 @@ a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--accent) 4
 .store.beta { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
 .store.beta small { color: var(--accent); opacity: 1; font-weight: 600; }
 .beta-note { margin: 12px 0 0; font-size: 14px; color: var(--muted); }
+/* Screenshots: a swipeable strip that runs to the screen edge */
+.shots {
+  display: flex; gap: 10px;
+  margin: 22px -22px 0; padding: 2px 22px 6px;
+  overflow-x: auto; overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory; scroll-padding-inline: 22px;
+  scrollbar-width: none;
+}
+.shots::-webkit-scrollbar { display: none; }
+.shots img {
+  flex: none; width: 150px; height: auto; aspect-ratio: 414 / 900;
+  border-radius: 18px; scroll-snap-align: start;
+  background: var(--soft);
+  box-shadow: 0 0 0 1px var(--line);
+}
 /* On Android the Google Play button comes first */
 .is-android .store.play { order: -1; }
 
@@ -214,6 +229,8 @@ footer p { margin: 6px 0; }
   .app-desc { margin-bottom: 24px; }
   .stores { flex-direction: column; }
   .store { flex: 0 0 auto; width: 100%; min-width: 0; }
+  .shots { margin: 22px -28px 0; padding: 2px 28px 6px; scroll-padding-inline: 28px; scrollbar-width: thin; }
+  .shots img { width: calc((100% - 10px) / 2); }
   .app-links { margin-top: auto; padding-top: 18px; }
 
   /* Privacy / support: title column beside the text */
