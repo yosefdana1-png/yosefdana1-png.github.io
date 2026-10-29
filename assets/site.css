@@ -152,6 +152,40 @@ details ul { color: var(--muted); }
 footer { text-align: center; margin-top: 44px; color: var(--muted); font-size: 15px; }
 footer p { margin: 6px 0; }
 
+/* ===== Wide screens (computer, landscape tablet) ===== */
+@media (min-width: 900px) {
+  .wrap, .wrap.narrow { max-width: 1120px; padding: 28px 40px 56px; }
+  .topbar { margin-bottom: 40px; }
+
+  /* Home: apps side by side as cards */
+  .home-head { margin: 32px 0 56px; }
+  .brand { font-size: 48px; }
+  .tagline { font-size: 19px; }
+  .apps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
+  .app, .app:last-of-type {
+    display: flex; flex-direction: column;
+    padding: 28px; border: 1px solid var(--line); border-radius: 20px; background: var(--soft);
+  }
+  .app-name { font-size: 23px; }
+  .app-desc { margin-bottom: 24px; }
+  .stores { flex-direction: column; }
+  .store { flex: 0 0 auto; width: 100%; min-width: 0; }
+  .app-links { margin-top: auto; padding-top: 18px; }
+
+  /* Privacy / support: title column beside the text */
+  .lang-block {
+    display: grid; grid-template-columns: 260px minmax(0, 680px);
+    gap: 72px; justify-content: center;
+  }
+  .page-side { position: sticky; top: 32px; align-self: start; }
+  .page-side .page-head { flex-direction: column; align-items: flex-start; gap: 18px; }
+  .page-side .app-icon { width: 88px; height: 88px; border-radius: 20px; }
+  .page-side h1 { font-size: 34px; }
+  .page-body > :first-child { margin-top: 0; }
+  .page-body > h2:first-child { margin-top: 0; }
+  footer { margin-top: 72px; }
+}
+
 ::selection { background: color-mix(in srgb, var(--gold) 30%, transparent); color: var(--ink); }
 a:focus-visible, summary:focus-visible, .store:focus-visible {
   outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px;
