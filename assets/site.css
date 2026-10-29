@@ -1,5 +1,6 @@
 /* Dana Studio — one shared style for every page (home, privacy, support).
-   Every page carries Hebrew and English; lang.js shows one at a time. */
+   Every page carries Hebrew and English; site.js shows one at a time
+   and handles the light/dark switch. */
 :root {
   --paper: #FFFFFF;
   --ink: #1A1F2B;
@@ -17,15 +18,15 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --paper: #14171F; --ink: #F2EFE8; --muted: #A3A7B1; --gold: #D2AE62;
-    --line: #2A2E38; --soft: #1B1F29; --line-strong: #474C59;
-    --btn: #F2EFE8; --btn-text: #14171F;
+    --paper: #0A0A0A; --ink: #F2EFE8; --muted: #A6A39C; --gold: #D2AE62;
+    --line: #242322; --soft: #141413; --line-strong: #3B3A37;
+    --btn: #F2EFE8; --btn-text: #0A0A0A;
   }
 }
 :root[data-theme="dark"] {
-  --paper: #14171F; --ink: #F2EFE8; --muted: #A3A7B1; --gold: #D2AE62;
-  --line: #2A2E38; --soft: #1B1F29; --line-strong: #474C59;
-  --btn: #F2EFE8; --btn-text: #14171F;
+  --paper: #0A0A0A; --ink: #F2EFE8; --muted: #A6A39C; --gold: #D2AE62;
+  --line: #242322; --soft: #141413; --line-strong: #3B3A37;
+  --btn: #F2EFE8; --btn-text: #0A0A0A;
 }
 
 /* ===== Language: show only the active one (Hebrew by default) ===== */
@@ -51,21 +52,39 @@ a { color: var(--ink); text-decoration-color: var(--gold); text-underline-offset
 .ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; }
 .rule { width: 36px; height: 2px; background: var(--gold); border: 0; margin: 20px 0 24px; }
 
-/* ===== Top bar: back link + language switch ===== */
+/* ===== Top bar: home button, theme switch, language switch ===== */
 .topbar {
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   min-height: 44px; margin-bottom: 24px; font-size: 15px;
 }
-.topbar .back { color: var(--muted); text-decoration: none; padding: 8px 0; }
-.lang-switch {
-  margin-inline-start: auto;
-  display: inline-flex; align-items: center; gap: 7px;
-  min-height: 38px; padding: 6px 14px;
+.tools { margin-inline-start: auto; display: flex; align-items: center; gap: 8px; }
+.pill {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 40px; padding: 6px 14px;
   border: 1px solid var(--line-strong); border-radius: 999px;
-  color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px;
+  background: transparent; color: var(--ink);
+  font: inherit; font-weight: 600; font-size: 15px; line-height: 1;
+  text-decoration: none; cursor: pointer;
   transition: border-color .2s var(--ease), background-color .2s var(--ease);
 }
-.lang-switch svg { width: 16px; height: 16px; flex: none; stroke: var(--gold); fill: none; stroke-width: 1.6; }
+.pill svg { width: 17px; height: 17px; flex: none; stroke: var(--gold); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.home-link { padding-inline-start: 6px; }
+.home-link .mark {
+  width: 28px; height: 28px; border-radius: 50%; flex: none;
+  display: grid; place-items: center;
+  background: #111111; color: #D2AE62;
+  font-family: "Frank Ruhl Libre", Georgia, serif; font-weight: 700; font-size: 17px; line-height: 1;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent);
+}
+.theme-btn { width: 40px; padding: 0; }
+.theme-btn .i-sun { display: none; }
+:root[data-theme="dark"] .theme-btn .i-sun { display: block; }
+:root[data-theme="dark"] .theme-btn .i-moon { display: none; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .theme-btn .i-sun { display: block; }
+  :root:not([data-theme]) .theme-btn .i-moon { display: none; }
+}
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* ===== Home: header ===== */
 .home-head { text-align: center; margin: 20px 0 38px; }
@@ -132,6 +151,21 @@ h2 { font-size: 21px; line-height: 1.3; margin: 32px 0 8px; }
 ul { padding-inline-start: 1.2em; margin: 8px 0; }
 li { margin: 6px 0; }
 .updated { color: var(--muted); font-size: 15px; margin: 0 0 8px; }
+
+/* Privacy ↔ support, under the app title */
+.page-nav {
+  display: flex; gap: 4px; width: fit-content;
+  margin: 18px 0 8px; padding: 4px;
+  background: var(--soft); border: 1px solid var(--line); border-radius: 999px;
+}
+.page-nav a {
+  padding: 7px 16px; border-radius: 999px;
+  color: var(--muted); text-decoration: none; font-size: 15px; font-weight: 600;
+}
+.page-nav a[aria-current="page"] {
+  background: var(--paper); color: var(--ink);
+  box-shadow: 0 0 0 1px var(--line), 0 1px 3px color-mix(in srgb, var(--ink) 10%, transparent);
+}
 .highlight {
   background: var(--soft); border: 1px solid var(--line); border-radius: 14px;
   padding: 16px 18px; margin: 20px 0;
@@ -146,7 +180,6 @@ details:last-of-type { border-bottom: 1px solid var(--line); }
 summary { cursor: pointer; font-weight: 700; list-style-position: inside; }
 details p { margin: 10px 0 0; color: var(--muted); }
 details ul { color: var(--muted); }
-.page-links { margin-top: 28px; font-size: 15px; }
 
 /* ===== Footer ===== */
 footer { text-align: center; margin-top: 44px; color: var(--muted); font-size: 15px; }
@@ -166,7 +199,8 @@ footer p { margin: 6px 0; }
     display: flex; flex-direction: column;
     padding: 28px; border: 1px solid var(--line); border-radius: 20px; background: var(--soft);
   }
-  .app-name { font-size: 23px; }
+  .app-head { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 12px; }
+  .app-name { font-size: 24px; }
   .app-desc { margin-bottom: 24px; }
   .stores { flex-direction: column; }
   .store { flex: 0 0 auto; width: 100%; min-width: 0; }
@@ -181,20 +215,23 @@ footer p { margin: 6px 0; }
   .page-side .page-head { flex-direction: column; align-items: flex-start; gap: 18px; }
   .page-side .app-icon { width: 88px; height: 88px; border-radius: 20px; }
   .page-side h1 { font-size: 34px; }
+  .page-side .page-nav { flex-direction: column; width: 100%; margin-top: 28px; border-radius: 16px; }
+  .page-side .page-nav a { border-radius: 12px; padding: 10px 14px; }
   .page-body > :first-child { margin-top: 0; }
   .page-body > h2:first-child { margin-top: 0; }
   footer { margin-top: 72px; }
 }
 
 ::selection { background: color-mix(in srgb, var(--gold) 30%, transparent); color: var(--ink); }
-a:focus-visible, summary:focus-visible, .store:focus-visible {
+a:focus-visible, button:focus-visible, summary:focus-visible, .store:focus-visible {
   outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px;
 }
 .store:focus-visible { border-radius: 12px; }
+.pill:focus-visible { border-radius: 999px; }
 @media (hover: hover) {
   a.store:hover { transform: translateY(-1px); box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--ink) 45%, transparent); }
-  .lang-switch:hover { border-color: var(--gold); background: var(--soft); }
-  .topbar .back:hover, .app-links a:hover { color: var(--ink); }
+  .pill:hover { border-color: var(--gold); background: var(--soft); }
+  .page-nav a:not([aria-current]):hover, .app-links a:hover { color: var(--ink); }
   a:hover { text-decoration-thickness: 2px; }
 }
-@media (prefers-reduced-motion: reduce) { .store, .lang-switch { transition: none; } }
+@media (prefers-reduced-motion: reduce) { .store, .pill { transition: none; } }
