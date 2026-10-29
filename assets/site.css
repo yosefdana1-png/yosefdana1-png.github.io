@@ -3,13 +3,14 @@
    and handles the light/dark switch. */
 :root {
   --paper: #FFFFFF;
-  --ink: #1A1F2B;
-  --muted: #5E6472;
+  --ink: #171717;
+  --muted: #625F58;
   --gold: #B08A3E;
+  --acc-inventory: #8A6A26; --acc-milim: #9C5426; --acc-ringo: #B8452A;
   --line: #ECE6D8;
   --soft: #FAF8F3;
   --line-strong: #CFC5AE;
-  --btn: #1A1F2B;
+  --btn: #171717;
   --btn-text: #FFFFFF;
   --ease: cubic-bezier(.16, 1, .3, 1);
   box-sizing: border-box;
@@ -19,15 +20,23 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --paper: #0A0A0A; --ink: #F2EFE8; --muted: #A6A39C; --gold: #D2AE62;
+    --acc-inventory: #D2AE62; --acc-milim: #E6A574; --acc-ringo: #F2876A;
     --line: #242322; --soft: #141413; --line-strong: #3B3A37;
     --btn: #F2EFE8; --btn-text: #0A0A0A;
   }
 }
 :root[data-theme="dark"] {
   --paper: #0A0A0A; --ink: #F2EFE8; --muted: #A6A39C; --gold: #D2AE62;
+  --acc-inventory: #D2AE62; --acc-milim: #E6A574; --acc-ringo: #F2876A;
   --line: #242322; --soft: #141413; --line-strong: #3B3A37;
   --btn: #F2EFE8; --btn-text: #0A0A0A;
 }
+
+/* Each app has its own accent, taken from its icon. Outside an app: neutral. */
+:root { --accent: var(--ink); }
+[data-app="inventory"] { --accent: var(--acc-inventory); }
+[data-app="milim"] { --accent: var(--acc-milim); }
+[data-app="ringo"] { --accent: var(--acc-ringo); }
 
 /* ===== Language: show only the active one (Hebrew by default) ===== */
 :root:not([data-lang="en"]) [data-l="en"],
@@ -48,9 +57,8 @@ body {
 .wrap.narrow { max-width: 560px; }
 
 h1, h2, .brand, .app-name { font-family: "Frank Ruhl Libre", "Times New Roman", serif; font-weight: 700; }
-a { color: var(--ink); text-decoration-color: var(--gold); text-underline-offset: 3px; }
+a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); text-underline-offset: 3px; }
 .ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; }
-.rule { width: 36px; height: 2px; background: var(--gold); border: 0; margin: 20px 0 24px; }
 
 /* ===== Top bar: home button, theme switch, language switch ===== */
 .topbar {
@@ -67,7 +75,7 @@ a { color: var(--ink); text-decoration-color: var(--gold); text-underline-offset
   text-decoration: none; cursor: pointer;
   transition: border-color .2s var(--ease), background-color .2s var(--ease);
 }
-.pill svg { width: 17px; height: 17px; flex: none; stroke: var(--gold); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.pill svg { width: 17px; height: 17px; flex: none; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .home-link { padding-inline-start: 6px; }
 .home-link .mark {
   width: 28px; height: 28px; border-radius: 50%; flex: none;
@@ -102,8 +110,7 @@ a { color: var(--ink); text-decoration-color: var(--gold); text-underline-offset
 .brand .sep { color: var(--gold); font-weight: 500; margin: 0 .35em; }
 .brand .b-en { justify-self: end; }
 .brand .b-he { justify-self: start; }
-.home-head .rule { margin: 18px auto 16px; }
-.tagline { margin: 0; color: var(--muted); }
+.tagline { margin: 14px 0 0; color: var(--muted); }
 
 /* ===== Home: app ===== */
 .app { padding: 28px 0; border-top: 1px solid var(--line); }
@@ -114,6 +121,7 @@ a { color: var(--ink); text-decoration-color: var(--gold); text-underline-offset
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent);
 }
 .app-name { font-size: 26px; line-height: 1.2; margin: 0; }
+.app-lead { margin: 0 0 6px; font-weight: 700; font-size: 18px; line-height: 1.4; }
 .app-desc { margin: 0 0 20px; color: var(--muted); max-width: 60ch; }
 .app-links { display: flex; flex-wrap: wrap; gap: 4px 18px; margin-top: 14px; font-size: 14px; }
 .app-links a { color: var(--muted); }
@@ -137,7 +145,7 @@ a { color: var(--ink); text-decoration-color: var(--gold); text-underline-offset
 .store strong { font-size: 17px; }
 .store.soon { background: transparent; color: var(--muted); border: 1px dashed var(--line-strong); cursor: default; }
 .store.beta { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
-.store.beta small { color: var(--gold); opacity: 1; font-weight: 600; }
+.store.beta small { color: var(--accent); opacity: 1; font-weight: 600; }
 .beta-note { margin: 12px 0 0; font-size: 14px; color: var(--muted); }
 /* On Android the Google Play button comes first */
 .is-android .store.play { order: -1; }
@@ -147,6 +155,8 @@ a { color: var(--ink); text-decoration-color: var(--gold); text-underline-offset
 .page-head .app-icon { width: 64px; height: 64px; border-radius: 15px; }
 .page-head h1 { font-size: 30px; line-height: 1.2; margin: 0; }
 .subtitle { margin: 2px 0 0; color: var(--muted); font-size: 16px; }
+.page-side { margin-bottom: 24px; }
+.page-side .updated { margin-top: 18px; }
 h2 { font-size: 21px; line-height: 1.3; margin: 32px 0 8px; }
 ul { padding-inline-start: 1.2em; margin: 8px 0; }
 li { margin: 6px 0; }
@@ -172,7 +182,7 @@ li { margin: 6px 0; }
 }
 .highlight p { margin: 0; }
 .highlight p + p { margin-top: 8px; color: var(--muted); font-size: 15px; }
-.highlight strong:first-child { color: var(--gold); }
+.highlight strong:first-child { color: var(--accent); }
 
 /* FAQ */
 details { border-top: 1px solid var(--line); padding: 14px 0; }
@@ -216,21 +226,22 @@ footer p { margin: 6px 0; }
   .page-side .app-icon { width: 88px; height: 88px; border-radius: 20px; }
   .page-side h1 { font-size: 34px; }
   .page-side .page-nav { flex-direction: column; width: 100%; margin-top: 28px; border-radius: 16px; }
-  .page-side .page-nav a { border-radius: 12px; padding: 10px 14px; }
+  .page-side .page-nav a { border-radius: 12px; padding: 10px 14px; border-inline-start: 3px solid transparent; }
+  .page-side .page-nav a[aria-current="page"] { border-inline-start-color: var(--accent); }
   .page-body > :first-child { margin-top: 0; }
   .page-body > h2:first-child { margin-top: 0; }
   footer { margin-top: 72px; }
 }
 
-::selection { background: color-mix(in srgb, var(--gold) 30%, transparent); color: var(--ink); }
+::selection { background: color-mix(in srgb, var(--accent) 25%, transparent); color: var(--ink); }
 a:focus-visible, button:focus-visible, summary:focus-visible, .store:focus-visible {
-  outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 4px;
+  outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px;
 }
 .store:focus-visible { border-radius: 12px; }
 .pill:focus-visible { border-radius: 999px; }
 @media (hover: hover) {
   a.store:hover { transform: translateY(-1px); box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--ink) 45%, transparent); }
-  .pill:hover { border-color: var(--gold); background: var(--soft); }
+  .pill:hover { border-color: var(--ink); background: var(--soft); }
   .page-nav a:not([aria-current]):hover, .app-links a:hover { color: var(--ink); }
   a:hover { text-decoration-thickness: 2px; }
 }

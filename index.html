@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl" data-title-he="Dana Studio — האפליקציות" data-title-en="Dana Studio — Apps">
+<html lang="he" dir="rtl" data-title-he="האפליקציות | Dana Studio" data-title-en="Apps | Dana Studio">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Dana Studio — האפליקציות</title>
+<title>האפליקציות | Dana Studio</title>
 <meta name="description" content="האפליקציות של Dana Studio: ניהול מלאי, מילים ו-Ringo. הורדה ל‑iPhone ול‑Android.">
 <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231A1F2B'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='38' fill='%23D2AE62'%3ED%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23111111'/%3E%3Ctext x='32' y='45' text-anchor='middle' font-family='Georgia,serif' font-weight='700' font-size='38' fill='%23D2AE62'%3ED%3C/text%3E%3C/svg%3E">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="he_IL">
 <meta property="og:locale:alternate" content="en_US">
@@ -34,19 +34,20 @@
 
   <header class="home-head">
     <h1 class="brand"><span class="b-en">Dana Studio</span><span class="sep">|</span><span class="b-he" lang="he">דנה סטודיו</span></h1>
-    <hr class="rule">
     <p class="tagline"><span data-l="he">אפליקציות בעברית, לאייפון ולאנדרואיד</span><span data-l="en" lang="en">Hebrew apps for iPhone and Android</span></p>
   </header>
 
   <div class="apps">
     <!-- ================= אפליקציה: ניהול מלאי ================= -->
-    <section class="app" id="inventory">
+    <section class="app" id="inventory" data-app="inventory">
       <div class="app-head">
         <img class="app-icon" src="inventory/icon.png" alt="" width="72" height="72">
         <h2 class="app-name"><span data-l="he">ניהול מלאי</span><span data-l="en" lang="en">Inventory Manager</span></h2>
       </div>
-      <p class="app-desc" data-l="he">אפליקציה שתעזור לך לנהל את המחסן של העסק, את המזווה של הבית או כל מה שאתה רוצה. הוספת פריטים וכמויות בקלות, שיתוף מחסנים בין משתמשים וכל מה שצריך.</p>
-      <p class="app-desc" data-l="en" lang="en">Manage your business stockroom, your home pantry or anything else. Add items and quantities easily, share stockrooms with other people, and everything else you need.</p>
+      <p class="app-lead" data-l="he">המלאי של העסק או של הבית, בטלפון</p>
+      <p class="app-lead" data-l="en" lang="en">Your stockroom or pantry, on your phone</p>
+      <p class="app-desc" data-l="he">מוסיפים פריטים וכמויות, ומשתפים את המחסן עם מי שעובד איתך.</p>
+      <p class="app-desc" data-l="en" lang="en">Add items and quantities, and share a stockroom with the people you work with.</p>
       <div class="stores">
         <a class="store ios" href="https://apps.apple.com/il/app/%D7%9E%D7%9C%D7%90%D7%99-%D7%A0%D7%99%D7%94%D7%95%D7%9C-%D7%9E%D7%9C%D7%90%D7%99-%D7%9E%D7%A9%D7%95%D7%AA%D7%A3/id6809037961?l=he" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8C7 7.4 5.5 8.3 4.7 9.8c-1.7 2.9-.4 7.2 1.2 9.5.8 1.1 1.7 2.4 2.9 2.4 1.2 0 1.6-.8 3-.8s1.8.8 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.7 0 0-2.5-1-2.5-4zM14.1 5.6c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3z"/></svg>
@@ -67,13 +68,15 @@
     </section>
 
     <!-- ================= אפליקציה: מילים ================= -->
-    <section class="app" id="milim">
+    <section class="app" id="milim" data-app="milim">
       <div class="app-head">
         <img class="app-icon" src="milim/icon.png" alt="" width="72" height="72">
         <h2 class="app-name"><span data-l="he">מילים</span><span data-l="en" lang="en">Milim</span></h2>
       </div>
-      <p class="app-desc" data-l="he">אפליקציה שתעזור לך לשדרג את הסרטונים שלך עם כתוביות בעברית. כתוביות בעברית גם בחינם, עריכה של הכתוביות בקלות והוספת אפקטים, מדבקות וטקסט עם הפריים.</p>
-      <p class="app-desc" data-l="en" lang="en">Upgrade your videos with Hebrew subtitles, free subtitles included. Edit subtitles easily and add effects, stickers and text that tracks the frame.</p>
+      <p class="app-lead" data-l="he">כתוביות בעברית לסרטונים, גם בחינם</p>
+      <p class="app-lead" data-l="en" lang="en">Hebrew subtitles for your videos, free too</p>
+      <p class="app-desc" data-l="he">עורכים את הכתוביות בקלות, ומוסיפים אפקטים, מדבקות וטקסט שזז עם הפריים.</p>
+      <p class="app-desc" data-l="en" lang="en">Edit the subtitles easily, and add effects, stickers and text that moves with the frame.</p>
       <div class="stores">
         <a class="store ios" href="https://apps.apple.com/il/app/%D7%9E%D7%99%D7%9C%D7%99%D7%9D/id6809080946?l=he" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8C7 7.4 5.5 8.3 4.7 9.8c-1.7 2.9-.4 7.2 1.2 9.5.8 1.1 1.7 2.4 2.9 2.4 1.2 0 1.6-.8 3-.8s1.8.8 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.7 0 0-2.5-1-2.5-4zM14.1 5.6c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3z"/></svg>
@@ -88,13 +91,15 @@
 
     <!-- ================= אפליקציה: Ringo ================= -->
     <!-- כשהאפליקציה תצא: החלף את ה-div של "בקרוב" בקישור <a class="store ios" href="..."> עם "להורדה מ־" / "Download on the" -->
-    <section class="app" id="ringo">
+    <section class="app" id="ringo" data-app="ringo">
       <div class="app-head">
         <img class="app-icon" src="ringo/icon.png" alt="" width="72" height="72">
         <h2 class="app-name"><span data-l="he"><bdi dir="ltr">Ringo:</bdi> יוצר צלצולים</span><span data-l="en" lang="en">Ringo: Ringtone Maker</span></h2>
       </div>
-      <p class="app-desc" data-l="he">אפליקציה שהופכת כל שיר, סרטון או הודעה קולית מוואטסאפ לצלצול לאייפון. חיתוך מדויק על גלי הקול, כניסה ויציאה הדרגתית, ומשם ישר ל"שימוש כצלצול".</p>
-      <p class="app-desc" data-l="en" lang="en">Turn any song, video or WhatsApp voice message into an iPhone ringtone. Precise trimming on the waveform, fade in and fade out, then straight to “Use as Ringtone”.</p>
+      <p class="app-lead" data-l="he">כל שיר, סרטון או הודעה קולית, כצלצול לאייפון</p>
+      <p class="app-lead" data-l="en" lang="en">Any song, video or voice message, as an iPhone ringtone</p>
+      <p class="app-desc" data-l="he">חותכים בדיוק על גלי הקול, מוסיפים כניסה ויציאה הדרגתית, ומגדירים ישר כצלצול.</p>
+      <p class="app-desc" data-l="en" lang="en">Trim precisely on the waveform, add a fade in and out, and set it as your ringtone right away.</p>
       <div class="stores">
         <div class="store ios soon" aria-disabled="true">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.9-3-.8C7 7.4 5.5 8.3 4.7 9.8c-1.7 2.9-.4 7.2 1.2 9.5.8 1.1 1.7 2.4 2.9 2.4 1.2 0 1.6-.8 3-.8s1.8.8 3 .7c1.3 0 2.1-1.1 2.8-2.3.9-1.3 1.3-2.6 1.3-2.7 0 0-2.5-1-2.5-4zM14.1 5.6c.6-.8 1.1-1.9 1-3-.9 0-2.1.6-2.7 1.4-.6.7-1.1 1.8-1 2.9 1 .1 2.1-.5 2.7-1.3z"/></svg>
