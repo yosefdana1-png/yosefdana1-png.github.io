@@ -20,7 +20,18 @@
     root.dir = LANGS[lang];
     var title = root.getAttribute('data-title-' + lang);
     if (title) document.title = title;
+    localizeAlts();
   }
+  // Pictures shared by both languages keep their Hebrew alt and carry the English one in data-alt-en.
+  function localizeAlts() {
+    var imgs = document.querySelectorAll('img[data-alt-en]');
+    for (var i = 0; i < imgs.length; i++) {
+      var img = imgs[i];
+      if (!img.hasAttribute('data-alt-he')) img.setAttribute('data-alt-he', img.alt);
+      img.alt = img.getAttribute('data-alt-' + root.lang);
+    }
+  }
+  document.addEventListener('DOMContentLoaded', localizeAlts);
 
   var saved = load('lang');
   applyLang(fromHash() || (LANGS[saved] ? saved : 'he'));
@@ -81,6 +92,22 @@
   }
   document.addEventListener('DOMContentLoaded', openShotsOnWide);
   wide.addEventListener('change', openShotsOnWide);
+
+  // Screenshots open with the keyboard too: Tab to one, then Enter or Space.
+  document.addEventListener('DOMContentLoaded', function () {
+    var imgs = document.querySelectorAll('.shots img');
+    for (var i = 0; i < imgs.length; i++) {
+      imgs[i].tabIndex = 0;
+      imgs[i].setAttribute('role', 'button');
+    }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var shot = e.target.closest && e.target.closest('.shots img');
+    if (!shot) return;
+    e.preventDefault();
+    openViewer(shot);
+  });
 
   // Tap a screenshot to see it large. Next / previous with the side buttons,
   // the arrow keys or a swipe; Esc, × or a tap outside the picture closes.

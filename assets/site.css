@@ -1,6 +1,26 @@
 /* Dana Studio — one shared style for every page (home, privacy, support).
    Every page carries Hebrew and English; site.js shows one at a time
    and handles the light/dark switch. */
+/* ===== Fonts: served from this site, so visitors' browsers never contact Google.
+   Variable fonts from Google Fonts, SIL Open Font License (assets/fonts/OFL-*.txt). ===== */
+@font-face { font-family: "Assistant"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(fonts/assistant-hebrew.woff2) format("woff2");
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+@font-face { font-family: "Assistant"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(fonts/assistant-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Assistant"; font-style: normal; font-weight: 400 700; font-display: swap;
+  src: url(fonts/assistant-latin-ext.woff2) format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Frank Ruhl Libre"; font-style: normal; font-weight: 500 700; font-display: swap;
+  src: url(fonts/frank-ruhl-libre-hebrew.woff2) format("woff2");
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+@font-face { font-family: "Frank Ruhl Libre"; font-style: normal; font-weight: 500 700; font-display: swap;
+  src: url(fonts/frank-ruhl-libre-latin.woff2) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Frank Ruhl Libre"; font-style: normal; font-weight: 500 700; font-display: swap;
+  src: url(fonts/frank-ruhl-libre-latin-ext.woff2) format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF; }
 :root {
   --paper: #FFFFFF;
   --ink: #171717;
@@ -65,6 +85,11 @@ a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--accent) 4
   display: flex; align-items: center; justify-content: space-between; gap: 12px;
   min-height: 44px; margin-bottom: 24px; font-size: 15px;
 }
+/* The bar keeps one layout in both languages, so the buttons don't jump sides
+   when switching: home on the right, theme and language on the left. */
+.topbar, .tools { direction: rtl; }
+:root[dir="ltr"] .home-link { direction: ltr; }
+.tools [data-set-lang] { min-width: 104px; }
 .tools { margin-inline-start: auto; display: flex; align-items: center; gap: 8px; }
 .pill {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
@@ -92,6 +117,14 @@ a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--accent) 4
   :root:not([data-theme]) .theme-btn .i-sun { display: block; }
   :root:not([data-theme]) .theme-btn .i-moon { display: none; }
 }
+/* Skip link: hidden until a keyboard user tabs to it */
+.skip {
+  position: absolute; inset-inline-start: 12px; top: 12px; z-index: 10;
+  padding: 10px 16px; border-radius: 999px;
+  background: var(--btn); color: var(--btn-text); font-weight: 600; text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip:focus { transform: none; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* ===== Home: header ===== */
@@ -275,6 +308,7 @@ details ul { color: var(--muted); }
 /* ===== Footer ===== */
 footer { text-align: center; margin-top: 44px; color: var(--muted); font-size: 15px; }
 footer p { margin: 6px 0; }
+footer a { color: var(--muted); }
 
 /* ===== Wide screens (computer, landscape tablet) ===== */
 @media (min-width: 900px) {
@@ -293,7 +327,7 @@ footer p { margin: 6px 0; }
   .app-head { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 12px; }
   .app-name { font-size: 24px; }
   .app-desc { margin-bottom: 24px; }
-  .shots-box { order: -1; margin: 0 0 22px; }
+  .shots-box { margin: 22px 0 0; }
   .shots-box > summary { display: none; }
   .shots {
     margin: 0; padding: 0; overflow: hidden;
@@ -301,6 +335,22 @@ footer p { margin: 6px 0; }
   }
   .shots img { width: 100%; border-radius: 12px; }
   .app-links { margin-top: auto; padding-top: 18px; }
+
+  /* Same zones at the same height in all three cards, however long each text is:
+     name, headline, text, devices, store buttons, beta note, screenshots, links. */
+  @supports (grid-template-rows: subgrid) {
+    .apps { grid-template-rows: repeat(8, auto); row-gap: 0; }
+    .app, .app:last-of-type { display: grid; grid-row: span 8; grid-template-rows: subgrid; align-content: start; }
+    .app > * { align-self: start; }
+    .app-head { grid-row: 1; }
+    .app-lead { grid-row: 2; }
+    .app-desc { grid-row: 3; }
+    .app-devices { grid-row: 4; }
+    .stores { grid-row: 5; }
+    .beta-note { grid-row: 6; }
+    .shots-box { grid-row: 7; }
+    .app-links { grid-row: 8; margin-top: 0; }
+  }
 
   /* Privacy / support: title column beside the text */
   .lang-block {
@@ -325,6 +375,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 .badge:focus-visible, .store:focus-visible { border-radius: 9px; }
 .pill:focus-visible { border-radius: 999px; }
+.shots img:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 @media (hover: hover) {
   a.store:hover, a.badge:hover { transform: translateY(-1px); box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--ink) 45%, transparent); }
   .pill:hover { border-color: var(--ink); background: var(--soft); }

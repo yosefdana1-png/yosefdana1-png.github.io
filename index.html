@@ -15,14 +15,12 @@
 <meta property="og:title" content="Dana Studio | דנה סטודיו">
 <meta property="og:description" content="אפליקציות בעברית לאייפון ולאנדרואיד: ניהול מלאי, מילים ו-Ringo.">
 <meta property="og:url" content="https://danastudio.app/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700&family=Assistant:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
 <script src="assets/site.js"></script>
 </head>
 <body>
-<main class="wrap narrow">
+<a class="skip" href="#main"><span data-l="he">דילוג לתוכן</span><span data-l="en" lang="en">Skip to content</span></a>
+<div class="wrap narrow">
 
   <nav class="topbar">
     <div class="tools">
@@ -31,6 +29,8 @@
       <a class="pill" href="#he" data-set-lang="he" data-l="en" lang="he"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>עברית</a>
     </div>
   </nav>
+
+  <main id="main">
 
   <header class="home-head">
     <h1 class="brand"><span class="b-en">Dana Studio</span><span class="sep">|</span><span class="b-he" lang="he">דנה סטודיו</span></h1>
@@ -67,10 +67,10 @@
       <details class="shots-box">
         <summary><span data-l="he">צילומי מסך</span><span data-l="en" lang="en">Screenshots</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
         <div class="shots">
-          <img src="inventory/screens/1.jpg" data-full="inventory/screens/1-large.jpg" alt="רשימת הפריטים במחסן, עם הכמויות" width="414" height="900" loading="lazy" decoding="async">
-          <img src="inventory/screens/2.jpg" data-full="inventory/screens/2-large.jpg" alt="רשימת המחסנים" width="414" height="900" loading="lazy" decoding="async">
-          <img src="inventory/screens/3.jpg" data-full="inventory/screens/3-large.jpg" alt="הוספת כמות לפריט" width="414" height="900" loading="lazy" decoding="async">
-          <img src="inventory/screens/4.jpg" data-full="inventory/screens/4-large.jpg" alt="הגדרות מחסן ושיתוף" width="414" height="900" loading="lazy" decoding="async">
+          <img src="inventory/screens/1.jpg" data-alt-en="The items in a stockroom, with quantities" data-full="inventory/screens/1-large.jpg" alt="רשימת הפריטים במחסן, עם הכמויות" width="414" height="900" loading="lazy" decoding="async">
+          <img src="inventory/screens/2.jpg" data-alt-en="The list of stockrooms" data-full="inventory/screens/2-large.jpg" alt="רשימת המחסנים" width="414" height="900" loading="lazy" decoding="async">
+          <img src="inventory/screens/3.jpg" data-alt-en="Adding stock to an item" data-full="inventory/screens/3-large.jpg" alt="הוספת כמות לפריט" width="414" height="900" loading="lazy" decoding="async">
+          <img src="inventory/screens/4.jpg" data-alt-en="Stockroom settings and sharing" data-full="inventory/screens/4-large.jpg" alt="הגדרות מחסן ושיתוף" width="414" height="900" loading="lazy" decoding="async">
         </div>
       </details>
       <div class="app-links">
@@ -153,12 +153,15 @@
     </section>
   </div>
 
+  </main>
+
   <footer>
     <p><span data-l="he">שאלות ותמיכה:</span><span data-l="en" lang="en">Questions and support:</span> <a href="mailto:danastudio.apps@gmail.com" class="ltr">danastudio.apps@gmail.com</a></p>
+    <p><a href="accessibility.html"><span data-l="he">הצהרת נגישות</span><span data-l="en" lang="en">Accessibility statement</span></a></p>
     <p dir="ltr">© 2026 Yosef Dana</p>
   </footer>
 
-</main>
+</div>
 <script>
   // מזהה אנדרואיד ומקדים את כפתור Google Play
   if (/android/i.test(navigator.userAgent)) document.body.classList.add('is-android');
