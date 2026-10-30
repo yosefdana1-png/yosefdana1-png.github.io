@@ -305,6 +305,16 @@ summary { cursor: pointer; font-weight: 700; list-style-position: inside; }
 details p { margin: 10px 0 0; color: var(--muted); }
 details ul { color: var(--muted); }
 
+/* ===== 404 ===== */
+.not-found { text-align: center; padding: 24px 0 8px; }
+.not-found h1 { font-size: 32px; line-height: 1.2; margin: 0 0 12px; }
+.not-found p { color: var(--muted); max-width: 46ch; margin: 0 auto 24px; }
+.not-found .nf-code {
+  font-family: "Frank Ruhl Libre", Georgia, serif; font-weight: 700;
+  font-size: 96px; line-height: 1; margin-bottom: 16px; color: var(--gold);
+}
+.not-found .store { width: auto; display: inline-flex; padding: 6px 22px; }
+
 /* ===== Footer ===== */
 footer { text-align: center; margin-top: 44px; color: var(--muted); font-size: 15px; }
 footer p { margin: 6px 0; }
