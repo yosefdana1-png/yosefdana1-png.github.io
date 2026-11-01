@@ -1,105 +1,115 @@
 <!DOCTYPE html>
-<html lang="he" dir="rtl">
+<html lang="he" dir="rtl" data-title-he="מחיקת חשבון | ניהול מלאי" data-title-en="Delete account | Inventory Manager">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>מחיקת חשבון — ניהול מלאי</title>
-<link rel="icon" type="image/png" href="icon-192.png">
-<style>
-  :root{--bg:#0c0f14;--card:#1a2030;--accent:#4f8cff;--text:#e8ecf4;--text-sec:#8b95a8;--border:#252d3d;--danger:#ff5d5d;--ok:#3ecf8e}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Rubik,Arial,sans-serif;line-height:1.7}
-  main{max-width:720px;margin:0 auto;padding:40px 22px 80px}
-  header{display:flex;align-items:center;gap:14px;margin-bottom:28px}
-  header img{width:56px;height:56px;border-radius:14px}
-  h1{font-size:26px;margin:0}
-  .sub{color:var(--text-sec);font-size:14px;margin-top:2px}
-  h2{font-size:18px;margin:32px 0 8px;color:var(--accent)}
-  p,li{font-size:15px;color:var(--text)}
-  ul{padding-right:20px}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:16px 0}
-  .warn{border-color:var(--danger)}
-  a{color:var(--accent)}
-  label{display:block;font-size:14px;color:var(--text-sec);margin:14px 0 6px}
-  input[type=text],input[type=password]{width:100%;height:48px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:16px;padding:0 14px}
-  #u{direction:ltr;text-align:right}
-  .check{display:flex;gap:10px;align-items:flex-start;margin-top:18px;font-size:14px;color:var(--text)}
-  .check input{margin-top:5px;width:18px;height:18px}
-  button{width:100%;height:50px;margin-top:20px;border:0;border-radius:12px;color:#fff;font-size:16px;font-weight:600;cursor:pointer}
-  #go{background:var(--accent)}
-  #del{background:var(--danger)}
-  #back{background:transparent;border:1px solid var(--border);color:var(--text-sec);margin-top:10px}
-  button:disabled{opacity:.45;cursor:not-allowed}
-  #msg{min-height:22px;margin-top:14px;font-size:14px;color:var(--danger)}
-  #msg.ok{color:var(--ok)}
-  #step2{display:none}
-  #plan{padding-right:20px;font-size:14px}
-  #log{font-size:13px;color:var(--text-sec);margin:10px 0 0;padding-right:18px}
-  .en{direction:ltr;text-align:left;border-top:1px solid var(--border);margin-top:48px;padding-top:24px;color:var(--text-sec);font-size:14px}
-  .en h2{font-size:16px}
-  .en p,.en li{color:var(--text-sec);font-size:14px}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-itunes-app" content="app-id=6809037961">
+<title>מחיקת חשבון | ניהול מלאי</title>
+<meta name="description" content="מחיקת חשבון ונתונים באפליקציית ניהול מלאי מבית Dana Studio.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Dana Studio">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="מחיקת חשבון | ניהול מלאי">
+<meta property="og:description" content="מחיקת חשבון ונתונים באפליקציית ניהול מלאי מבית Dana Studio.">
+<meta property="og:url" content="https://danastudio.app/inventory/delete-account.html">
+<meta property="og:image" content="https://danastudio.app/assets/share/inventory.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ניהול מלאי">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="icon.png">
+<link rel="stylesheet" href="../assets/site.css">
+<script src="../assets/site.js"></script>
 </head>
-<body>
-<main>
-  <header>
-    <img src="icon-192.png" alt="">
-    <div>
-      <h1>מחיקת חשבון</h1>
-      <div class="sub">אפליקציית "ניהול מלאי" · Dana Studio</div>
+<body data-app="inventory">
+<a class="skip" href="#main"><span data-l="he">דילוג לתוכן</span><span data-l="en" lang="en">Skip to content</span></a>
+<div class="wrap">
+
+  <nav class="topbar">
+    <a class="pill home-link" href="../"><span class="mark" aria-hidden="true">D</span><span data-l="he">כל האפליקציות</span><span data-l="en" lang="en">All apps</span></a>
+    <div class="tools">
+      <button class="pill theme-btn" type="button" data-toggle-theme><svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg><span class="sr" data-l="he">מצב בהיר או כהה</span><span class="sr" data-l="en" lang="en">Light or dark mode</span></button>
+      <a class="pill" href="#en" data-set-lang="en" data-l="he" lang="en"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>English</a>
+      <a class="pill" href="#he" data-set-lang="he" data-l="en" lang="he"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>עברית</a>
     </div>
-  </header>
+  </nav>
 
-  <p>בעמוד הזה אפשר למחוק בעצמכם את החשבון וכל הנתונים המשויכים אליו, בלי לפנות אלינו. כדי לוודא שזה אתם, צריך להזין את שם המשתמש והסיסמה של החשבון.</p>
+  <main id="main">
 
-  <div class="card warn">
-    <strong>המחיקה סופית ואי אפשר לשחזר אותה.</strong>
-    <ul>
-      <li><strong>נמחקים:</strong> חשבון ההתחברות (שם המשתמש והסיסמה), שם התצוגה, המחסנים שאתם החבר היחיד בהם (על כל הפריטים והתמונות שלהם), וההגדרות האישיות.</li>
-      <li><strong>נשארים:</strong> מחסנים משותפים שיש בהם חברים נוספים ממשיכים להתקיים אצלם, ורק החברות שלכם מוסרת. אם אתם הבעלים של מחסן כזה, הבעלות עוברת לחבר אחר. רשומות היסטוריה ("מי שינה כמות") נשארות כטקסט, בלי קישור לחשבון.</li>
-    </ul>
-  </div>
+  <!-- One block for both languages: the deletion form is shared, only its texts switch. -->
+  <section class="lang-block">
+    <header class="page-side">
+      <div class="page-head">
+        <img class="app-icon" src="icon.png" alt="" width="64" height="64">
+        <div>
+          <h1><span data-l="he">מחיקת חשבון</span><span data-l="en" lang="en">Delete account</span></h1>
+          <p class="subtitle"><span data-l="he">ניהול מלאי</span><span data-l="en" lang="en">Inventory Manager</span></p>
+        </div>
+      </div>
+      <nav class="page-nav" aria-label="עמודי האפליקציה" data-aria-en="App pages">
+        <a href="privacy.html"><span data-l="he">מדיניות פרטיות</span><span data-l="en" lang="en">Privacy policy</span></a>
+        <a href="support.html"><span data-l="he">תמיכה</span><span data-l="en" lang="en">Support</span></a>
+        <a href="delete-account.html" aria-current="page"><span data-l="he">מחיקת חשבון</span><span data-l="en" lang="en">Delete account</span></a>
+      </nav>
+    </header>
+    <div class="page-body">
+      <p data-l="he">בעמוד הזה אפשר למחוק בעצמכם את החשבון וכל הנתונים המשויכים אליו, בלי לפנות אלינו. כדי לוודא שזה אתם, צריך להזין את שם המשתמש והסיסמה של החשבון.</p>
+      <p data-l="en" lang="en">On this page you can delete your account and all its data yourself, without contacting us. To make sure it's you, enter the account's username and password.</p>
 
-  <div class="card" id="step1">
-    <label for="u">שם משתמש</label>
-    <input type="text" id="u" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false">
-    <label for="p">סיסמה</label>
-    <input type="password" id="p" autocomplete="current-password" dir="auto">
-    <label class="check"><input type="checkbox" id="showpw"><span>הצג סיסמה (כדי שאפשר יהיה להקליד בעברית)</span></label>
-    <button id="go" disabled>המשך</button>
-  </div>
+      <div class="highlight danger">
+        <p data-l="he"><strong>המחיקה סופית ואי אפשר לשחזר אותה.</strong></p>
+        <p data-l="en" lang="en"><strong>Deletion is permanent and can't be undone.</strong></p>
+        <ul data-l="he">
+          <li><strong>נמחקים:</strong> חשבון ההתחברות (שם המשתמש והסיסמה), שם התצוגה, המחסנים שאתם החבר היחיד בהם (על כל הפריטים והתמונות שלהם), וההגדרות האישיות.</li>
+          <li><strong>נשארים:</strong> מחסנים משותפים שיש בהם חברים נוספים ממשיכים להתקיים אצלם, ורק החברות שלכם מוסרת. אם אתם הבעלים של מחסן כזה, הבעלות עוברת לחבר אחר. רשומות היסטוריה ("מי שינה כמות") נשארות כטקסט, בלי קישור לחשבון.</li>
+        </ul>
+        <ul data-l="en" lang="en">
+          <li><strong>Deleted:</strong> the login account (username and password), display name, warehouses where you are the only member (with all their items and photos), and personal settings.</li>
+          <li><strong>Kept:</strong> shared warehouses with other members stay with them, and only your membership is removed. If you own one, ownership passes to another member. History entries ("who changed a quantity") remain as plain text, with no link to the account.</li>
+        </ul>
+      </div>
 
-  <div class="card warn" id="step2">
-    <strong>אישור אחרון</strong>
-    <p>אתם עומדים למחוק את החשבון <strong id="who" dir="ltr"></strong>.</p>
-    <ul id="plan"></ul>
-    <label class="check"><input type="checkbox" id="ok"><span>אני מבין/ה שהחשבון והנתונים יימחקו לצמיתות ולא ניתן יהיה לשחזר אותם.</span></label>
-    <button id="del" disabled>מחק את החשבון שלי לצמיתות</button>
-    <button id="back">ביטול</button>
-    <ul id="log"></ul>
-  </div>
+      <div class="form-card" id="step1">
+        <label for="u"><span data-l="he">שם משתמש</span><span data-l="en" lang="en">Username</span></label>
+        <input type="text" id="u" dir="ltr" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false">
+        <label for="p"><span data-l="he">סיסמה</span><span data-l="en" lang="en">Password</span></label>
+        <input type="password" id="p" dir="auto" autocomplete="current-password">
+        <label class="check small"><input type="checkbox" id="showpw"><span><span data-l="he">הצג סיסמה (כדי שאפשר יהיה להקליד בעברית)</span><span data-l="en" lang="en">Show password (so you can type it in Hebrew)</span></span></label>
+        <button type="button" class="btn" id="go" disabled><span data-l="he">המשך</span><span data-l="en" lang="en">Continue</span></button>
+      </div>
 
-  <div id="msg" role="status" aria-live="polite"></div>
+      <div class="form-card danger" id="step2" hidden>
+        <p class="form-title"><span data-l="he">אישור אחרון</span><span data-l="en" lang="en">Final confirmation</span></p>
+        <p><span data-l="he">אתם עומדים למחוק את החשבון</span><span data-l="en" lang="en">You're about to delete the account</span> <strong id="who" dir="ltr"></strong></p>
+        <ul id="plan"></ul>
+        <label class="check"><input type="checkbox" id="ok"><span><span data-l="he">אני מבין/ה שהחשבון והנתונים יימחקו לצמיתות ולא ניתן יהיה לשחזר אותם.</span><span data-l="en" lang="en">I understand that the account and its data will be deleted permanently and can't be restored.</span></span></label>
+        <button type="button" class="btn btn-danger" id="del" disabled><span data-l="he">מחק את החשבון שלי לצמיתות</span><span data-l="en" lang="en">Permanently delete my account</span></button>
+        <button type="button" class="btn btn-quiet" id="back"><span data-l="he">ביטול</span><span data-l="en" lang="en">Cancel</span></button>
+        <ul id="log"></ul>
+      </div>
 
-  <h2>לא מצליחים להתחבר?</h2>
-  <p>אפשר לכתוב ל-<a href="mailto:danastudio.apps@gmail.com?subject=בקשה למחיקת חשבון — מלאי">danastudio.apps@gmail.com</a> עם שם המשתמש, ונטפל בבקשה תוך 7 ימים. מכיוון שהמחיקה סופית, ושמות משתמש אינם סוד, <strong>אנחנו עשויים לבקש הוכחה שהחשבון שלכם</strong> (למשל פרטים על המחסנים והפריטים שיצרתם). <strong>אם לא ניתן לאמת שהחשבון שלכם, נסרב למחוק אותו</strong>, כדי שאדם אחר לא יוכל למחוק חשבון שאינו שלו.</p>
+      <p id="msg" role="status" aria-live="polite"></p>
 
-  <h2>מחיקה חלקית (בלי לסגור את החשבון)</h2>
-  <p>אין צורך למחוק את החשבון כדי למחוק נתונים מסוימים. בתוך האפליקציה אפשר בכל רגע למחוק תמונה של פריט, פריטים בודדים, מחסנים פרטיים שלכם, ולעזוב מחסנים משותפים, והמחיקה מיידית. אפשר גם לשלוח בקשה לכתובת המייל למעלה למחיקת נתונים ספציפיים בלבד, ונטפל בה תוך 7 ימים.</p>
+      <h2><span data-l="he">לא מצליחים להתחבר?</span><span data-l="en" lang="en">Can't sign in?</span></h2>
+      <p data-l="he">אפשר לכתוב ל־<a href="mailto:danastudio.apps@gmail.com?subject=בקשה למחיקת חשבון — מלאי" class="ltr">danastudio.apps@gmail.com</a> עם שם המשתמש, ונטפל בבקשה תוך 7 ימים. מכיוון שהמחיקה סופית ושמות משתמש אינם סוד, <strong>אנחנו עשויים לבקש הוכחה שהחשבון שלכם</strong> (למשל פרטים על המחסנים והפריטים שיצרתם). <strong>אם לא ניתן לאמת שהחשבון שלכם, נסרב למחוק אותו</strong>, כדי שאדם אחר לא יוכל למחוק חשבון שאינו שלו.</p>
+      <p data-l="en" lang="en">Email <a href="mailto:danastudio.apps@gmail.com?subject=Account deletion request: Inventory">danastudio.apps@gmail.com</a> with your username, and we'll handle the request within 7 days. Because deletion is permanent and usernames aren't secret, <strong>we may ask for proof that the account is yours</strong> (for example, details about the warehouses and items you created). <strong>If we can't verify that the account is yours, we will decline to delete it</strong>, so nobody can delete an account that isn't theirs.</p>
 
-  <p style="margin-top:28px"><a href="https://yosefdana1-png.github.io/inventory/privacy.html">מדיניות פרטיות</a> · <a href="support.html">תמיכה</a></p>
+      <h2><span data-l="he">מחיקה חלקית, בלי לסגור את החשבון</span><span data-l="en" lang="en">Partial deletion, without closing the account</span></h2>
+      <p data-l="he">אין צורך למחוק את החשבון כדי למחוק נתונים מסוימים. בתוך האפליקציה אפשר בכל רגע למחוק תמונה של פריט, פריטים בודדים, מחסנים פרטיים שלכם, ולעזוב מחסנים משותפים, והמחיקה מיידית. אפשר גם לשלוח בקשה לכתובת המייל למעלה למחיקת נתונים מסוימים בלבד, ונטפל בה תוך 7 ימים.</p>
+      <p data-l="en" lang="en">You don't need to delete your account to delete specific data. In the app you can delete an item's photo, single items or your own private warehouses, or leave shared warehouses, at any time, and the deletion is immediate. You can also email the address above to delete specific data only, and we'll handle it within 7 days.</p>
+    </div>
+  </section>
 
-  <div class="en">
-    <h2>Delete your account</h2>
-    <p>You can delete your account and all its data yourself on this page. To verify it's you, enter your username and password. <strong>Deletion is permanent.</strong></p>
-    <ul>
-      <li><strong>Deleted:</strong> the login account, display name, warehouses where you are the only member (with their items and photos), and personal settings.</li>
-      <li><strong>Shared warehouses</strong> with other members stay with them; only your membership is removed, and ownership passes to another member if you were the owner. History entries remain as plain text with no link to the account.</li>
-    </ul>
-    <p><strong>Can't sign in or forgot your password?</strong> Email <a href="mailto:danastudio.apps@gmail.com">danastudio.apps@gmail.com</a> with your username; we handle requests within 7 days. Because deletion is permanent and usernames are not secret, <strong>we may ask for proof that the account is yours</strong> (for example details about the warehouses and items you created). <strong>If we can't verify ownership, we will decline to delete the account</strong>, so nobody can delete an account that isn't theirs.</p>
-    <p><strong>Partial deletion:</strong> you can delete photos, items and your own private warehouses, or leave shared ones, inside the app at any time — or email us to delete specific data only, without closing the account.</p>
-  </div>
-</main>
+  </main>
+
+  <footer>
+    <p><a href="../accessibility.html"><span data-l="he">הצהרת נגישות</span><span data-l="en" lang="en">Accessibility statement</span></a></p>
+    <p dir="ltr">© 2026 Yosef Dana · Dana Studio</p>
+  </footer>
+
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
@@ -113,7 +123,7 @@ const app = initializeApp({
   projectId: "inventory-app-d539d"
 }, "delete-account");
 const db = getDatabase(app);
-// In-memory only: this page shares its origin with the web app and must not touch the app's saved session.
+// In-memory only: this page shares its origin with the web app (danastudio.app/inventory-app/) and must not touch the app's saved session.
 const auth = initializeAuth(app, { persistence: inMemoryPersistence });
 
 // Must match index.html exactly (login encoding).
@@ -121,9 +131,36 @@ const b32enc=bytes=>{const A="abcdefghijklmnopqrstuvwxyz234567";let bits=0,val=0
 const emailForUsername=u=>/^[a-z0-9._-]+$/.test(u)?`${u}@inv-user.app`:`u-${b32enc(new TextEncoder().encode(u))}@inv-user.app`;
 const authPw=p=>p.length>=6?p:p+"0".repeat(6-p.length);
 
+// Messages in the page's current language (site.js sets <html lang>).
+const T={
+  he:{
+    checking:"בודק...", network:"שגיאה בחיבור, נסו שוב.", tooMany:"יותר מדי ניסיונות. נסו שוב בעוד כמה דקות.",
+    wrong:"שם משתמש או סיסמה שגויים.", readFail:"לא הצלחנו לקרוא את נתוני החשבון. נסו שוב.",
+    sole:n=>`יימחק המחסן "${n}" על כל הפריטים והתמונות שבו (אתם החבר היחיד).`,
+    shared:(n,t)=>`תוסר החברות שלכם במחסן המשותף "${n}"`+(t?" והבעלות תעבור לחבר אחר.":"."),
+    profile:"יימחקו שם התצוגה, ההגדרות האישיות וחשבון ההתחברות.",
+    deleting:"מוחק... אל תסגרו את העמוד.", delWh:n=>`נמחק מחסן: ${n}`, leftWh:n=>`הוסרה החברות מהמחסן המשותף: ${n}`,
+    delProfile:"נמחקו פרטי הפרופיל וההגדרות", delLogin:"נמחק חשבון ההתחברות",
+    done:"החשבון נמחק. תודה שהשתמשתם באפליקציה.",
+    failed:"אירעה שגיאה באמצע המחיקה. אפשר לנסות שוב, או לכתוב אלינו ל־danastudio.apps@gmail.com ונשלים את המחיקה."
+  },
+  en:{
+    checking:"Checking...", network:"Connection error, please try again.", tooMany:"Too many attempts. Try again in a few minutes.",
+    wrong:"Wrong username or password.", readFail:"We couldn't read the account's data. Please try again.",
+    sole:n=>`The warehouse "${n}" will be deleted with all its items and photos (you're its only member).`,
+    shared:(n,t)=>`Your membership in the shared warehouse "${n}" will be removed`+(t?", and ownership will pass to another member.":"."),
+    profile:"Your display name, personal settings and login account will be deleted.",
+    deleting:"Deleting... please don't close this page.", delWh:n=>`Deleted warehouse: ${n}`, leftWh:n=>`Left shared warehouse: ${n}`,
+    delProfile:"Deleted profile details and settings", delLogin:"Deleted the login account",
+    done:"Your account has been deleted. Thank you for using the app.",
+    failed:"Something went wrong during deletion. You can try again, or email danastudio.apps@gmail.com and we'll finish it."
+  }
+};
+const t=()=>T[document.documentElement.lang]||T.he;
+
 const $=id=>document.getElementById(id);
-const msg=(t,ok)=>{$("msg").textContent=t;$("msg").className=ok?"ok":""};
-const log=t=>{const li=document.createElement("li");li.textContent=t;$("log").appendChild(li)};
+const msg=(s,ok)=>{$("msg").textContent=s;$("msg").className=ok?"ok":""};
+const log=s=>{const li=document.createElement("li");li.textContent=s;$("log").appendChild(li)};
 const dbGet=async p=>{const s=await get(ref(db,p));return s.exists()?s.val():null};
 
 let user=null, username="", plan=[];
@@ -139,7 +176,7 @@ $("showpw").addEventListener("change",()=>{$("p").type=$("showpw").checked?"text
 async function reset(){
   try{await signOut(auth)}catch(_){}
   user=null;plan=[];
-  $("step2").style.display="none";$("step1").style.display="";
+  $("step2").hidden=true;$("step1").hidden=false;
   $("p").value="";$("ok").checked=false;$("showpw").checked=false;$("p").type="password";sync1();sync2();
 }
 $("back").addEventListener("click",()=>{msg("");reset()});
@@ -147,15 +184,15 @@ $("back").addEventListener("click",()=>{msg("");reset()});
 // Step 1: verify the credentials and show what will happen.
 $("go").addEventListener("click",async()=>{
   username=$("u").value.trim().toLowerCase();
-  $("go").disabled=true; msg("בודק...");
+  $("go").disabled=true; msg(t().checking);
   try{
     const cred=await signInWithEmailAndPassword(auth,emailForUsername(username),authPw($("p").value));
     user=cred.user;
   }catch(e){
     const c=e.code||"";
-    if(c==="auth/network-request-failed")msg("שגיאה בחיבור, נסו שוב.");
-    else if(c==="auth/too-many-requests")msg("יותר מדי ניסיונות. נסו שוב בעוד כמה דקות.");
-    else msg("שם משתמש או סיסמה שגויים.");
+    if(c==="auth/network-request-failed")msg(t().network);
+    else if(c==="auth/too-many-requests")msg(t().tooMany);
+    else msg(t().wrong);
     sync1(); return;
   }
   try{
@@ -171,54 +208,55 @@ $("go").addEventListener("click",async()=>{
     }
   }catch(e){
     console.error(e);
-    msg("לא הצלחנו לקרוא את נתוני החשבון. נסו שוב.");
+    msg(t().readFail);
     await reset(); return;
   }
   $("who").textContent=username;
   $("plan").innerHTML="";
-  const add=t=>{const li=document.createElement("li");li.textContent=t;$("plan").appendChild(li)};
+  const add=s=>{const li=document.createElement("li");li.textContent=s;$("plan").appendChild(li)};
   for(const w of plan){
-    if(w.kind==="sole")add(`יימחק המחסן "${w.name}" על כל הפריטים והתמונות שבו (אתם החבר היחיד).`);
-    else if(w.kind==="shared")add(`תוסר החברות שלכם במחסן המשותף "${w.name}"`+(w.transferTo?" והבעלות תעבור לחבר אחר.":"."));
+    if(w.kind==="sole")add(t().sole(w.name));
+    else if(w.kind==="shared")add(t().shared(w.name,w.transferTo));
   }
-  add("יימחקו שם התצוגה, ההגדרות האישיות וחשבון ההתחברות.");
+  add(t().profile);
   msg("");
-  $("step1").style.display="none";$("step2").style.display="block";
+  $("step1").hidden=true;$("step2").hidden=false;
+  $("ok").focus();
 });
 
 // Step 2: delete.
 $("del").addEventListener("click",async()=>{
   $("del").disabled=true;$("back").disabled=true;$("log").innerHTML="";
-  msg("מוחק... אל תסגרו את העמוד.");
+  msg(t().deleting);
   try{
     for(const w of plan){
       const wh=w.whId;
       if(w.kind==="sole"){
         // Drop invitations this warehouse sent, then images BEFORE the warehouse node (rules key off membership).
-        for(const t of (w.invites||[]))await remove(ref(db,`users/${t}/invites/${wh}`)).catch(()=>{});
+        for(const inv of (w.invites||[]))await remove(ref(db,`users/${inv}/invites/${wh}`)).catch(()=>{});
         await remove(ref(db,`itemImages/${wh}`)).catch(()=>{});
         await remove(ref(db,`warehouses/${wh}`));
-        log(`נמחק מחסן: ${w.name}`);
+        log(t().delWh(w.name));
       }else if(w.kind==="shared"){
         if(w.transferTo)await set(ref(db,`warehouses/${wh}/owner`),w.transferTo);
         await remove(ref(db,`warehouses/${wh}/members/${username}`));
-        log(`הוסרה החברות מהמחסן המשותף: ${w.name}`);
+        log(t().leftWh(w.name));
       }
       await remove(ref(db,`users/${username}/warehouses/${wh}`)).catch(()=>{});
     }
     // Profile + identity mapping (users first: its rules depend on the mapping).
     await remove(ref(db,`users/${username}`));
-    log("נמחקו פרטי הפרופיל וההגדרות");
+    log(t().delProfile);
     await remove(ref(db,`usernames/${username}`));
     await remove(ref(db,`uids/${user.uid}`));
     await deleteUser(user);
-    log("נמחק חשבון ההתחברות");
-    msg("החשבון נמחק. תודה שהשתמשתם באפליקציה.",true);
-    $("del").style.display="none";$("back").style.display="none";
+    log(t().delLogin);
+    msg(t().done,true);
+    $("del").hidden=true;$("back").hidden=true;
     $("u").value="";$("p").value="";
   }catch(e){
     console.error(e);
-    msg("אירעה שגיאה באמצע המחיקה. אפשר לנסות שוב, או לכתוב אלינו ל-danastudio.apps@gmail.com ונשלים את המחיקה.");
+    msg(t().failed);
     $("back").disabled=false;
     try{await signOut(auth)}catch(_){}
   }

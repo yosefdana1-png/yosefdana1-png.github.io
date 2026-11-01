@@ -30,6 +30,13 @@
       if (!img.hasAttribute('data-alt-he')) img.setAttribute('data-alt-he', img.alt);
       img.alt = img.getAttribute('data-alt-' + root.lang);
     }
+    // Same for aria-label on elements shared by both languages.
+    var labelled = document.querySelectorAll('[data-aria-en]');
+    for (var j = 0; j < labelled.length; j++) {
+      var el = labelled[j];
+      if (!el.hasAttribute('data-aria-he')) el.setAttribute('data-aria-he', el.getAttribute('aria-label'));
+      el.setAttribute('aria-label', el.getAttribute('data-aria-' + root.lang));
+    }
   }
   document.addEventListener('DOMContentLoaded', localizeAlts);
 
