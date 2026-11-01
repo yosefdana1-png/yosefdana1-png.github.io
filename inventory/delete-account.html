@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>מחיקת חשבון — ניהול מלאי</title>
+<link rel="icon" type="image/png" href="icon-192.png">
+<style>
+  :root{--bg:#0c0f14;--card:#1a2030;--accent:#4f8cff;--text:#e8ecf4;--text-sec:#8b95a8;--border:#252d3d;--danger:#ff5d5d;--ok:#3ecf8e}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Rubik,Arial,sans-serif;line-height:1.7}
+  main{max-width:720px;margin:0 auto;padding:40px 22px 80px}
+  header{display:flex;align-items:center;gap:14px;margin-bottom:28px}
+  header img{width:56px;height:56px;border-radius:14px}
+  h1{font-size:26px;margin:0}
+  .sub{color:var(--text-sec);font-size:14px;margin-top:2px}
+  h2{font-size:18px;margin:32px 0 8px;color:var(--accent)}
+  p,li{font-size:15px;color:var(--text)}
+  ul{padding-right:20px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;margin:16px 0}
+  .warn{border-color:var(--danger)}
+  a{color:var(--accent)}
+  label{display:block;font-size:14px;color:var(--text-sec);margin:14px 0 6px}
+  input[type=text],input[type=password]{width:100%;height:48px;border-radius:12px;border:1px solid var(--border);background:var(--bg);color:var(--text);font-size:16px;padding:0 14px}
+  input[type=text]{direction:ltr;text-align:right}
+  .check{display:flex;gap:10px;align-items:flex-start;margin-top:18px;font-size:14px;color:var(--text)}
+  .check input{margin-top:5px;width:18px;height:18px}
+  button{width:100%;height:50px;margin-top:20px;border:0;border-radius:12px;color:#fff;font-size:16px;font-weight:600;cursor:pointer}
+  #go{background:var(--accent)}
+  #del{background:var(--danger)}
+  #back{background:transparent;border:1px solid var(--border);color:var(--text-sec);margin-top:10px}
+  button:disabled{opacity:.45;cursor:not-allowed}
+  #msg{min-height:22px;margin-top:14px;font-size:14px;color:var(--danger)}
+  #msg.ok{color:var(--ok)}
+  #step2{display:none}
+  #plan{padding-right:20px;font-size:14px}
+  #log{font-size:13px;color:var(--text-sec);margin:10px 0 0;padding-right:18px}
+  .en{direction:ltr;text-align:left;border-top:1px solid var(--border);margin-top:48px;padding-top:24px;color:var(--text-sec);font-size:14px}
+  .en h2{font-size:16px}
+  .en p,.en li{color:var(--text-sec);font-size:14px}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="icon-192.png" alt="">
+    <div>
+      <h1>מחיקת חשבון</h1>
+      <div class="sub">אפליקציית "ניהול מלאי" · Dana Studio</div>
+    </div>
+  </header>
+
+  <p>בעמוד הזה אפשר למחוק בעצמכם את החשבון וכל הנתונים המשויכים אליו, בלי לפנות אלינו. כדי לוודא שזה אתם, צריך להזין את שם המשתמש והסיסמה של החשבון.</p>
+
+  <div class="card warn">
+    <strong>המחיקה סופית ואי אפשר לשחזר אותה.</strong>
+    <ul>
+      <li><strong>נמחקים:</strong> חשבון ההתחברות (שם המשתמש והסיסמה), שם התצוגה, המחסנים שאתם החבר היחיד בהם (על כל הפריטים והתמונות שלהם), וההגדרות האישיות.</li>
+      <li><strong>נשארים:</strong> מחסנים משותפים שיש בהם חברים נוספים ממשיכים להתקיים אצלם, ורק החברות שלכם מוסרת. אם אתם הבעלים של מחסן כזה, הבעלות עוברת לחבר אחר. רשומות היסטוריה ("מי שינה כמות") נשארות כטקסט, בלי קישור לחשבון.</li>
+    </ul>
+  </div>
+
+  <div class="card" id="step1">
+    <label for="u">שם משתמש</label>
+    <input type="text" id="u" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false">
+    <label for="p">סיסמה</label>
+    <input type="password" id="p" autocomplete="current-password">
+    <button id="go" disabled>המשך</button>
+  </div>
+
+  <div class="card warn" id="step2">
+    <strong>אישור אחרון</strong>
+    <p>אתם עומדים למחוק את החשבון <strong id="who" dir="ltr"></strong>.</p>
+    <ul id="plan"></ul>
+    <label class="check"><input type="checkbox" id="ok"><span>אני מבין/ה שהחשבון והנתונים יימחקו לצמיתות ולא ניתן יהיה לשחזר אותם.</span></label>
+    <button id="del" disabled>מחק את החשבון שלי לצמיתות</button>
+    <button id="back">ביטול</button>
+    <ul id="log"></ul>
+  </div>
+
+  <div id="msg" role="status" aria-live="polite"></div>
+
+  <h2>לא מצליחים להתחבר?</h2>
+  <p>אפשר לכתוב ל-<a href="mailto:danastudio.apps@gmail.com?subject=בקשה למחיקת חשבון — מלאי">danastudio.apps@gmail.com</a> עם שם המשתמש, ונטפל בבקשה תוך 7 ימים. מכיוון שהמחיקה סופית, ושמות משתמש אינם סוד, <strong>אנחנו עשויים לבקש הוכחה שהחשבון שלכם</strong> (למשל פרטים על המחסנים והפריטים שיצרתם). <strong>אם לא ניתן לאמת שהחשבון שלכם, נסרב למחוק אותו</strong>, כדי שאדם אחר לא יוכל למחוק חשבון שאינו שלו.</p>
+
+  <h2>מחיקה חלקית (בלי לסגור את החשבון)</h2>
+  <p>אין צורך למחוק את החשבון כדי למחוק נתונים מסוימים. בתוך האפליקציה אפשר בכל רגע למחוק תמונה של פריט, פריטים בודדים, מחסנים פרטיים שלכם, ולעזוב מחסנים משותפים, והמחיקה מיידית. אפשר גם לשלוח בקשה לכתובת המייל למעלה למחיקת נתונים ספציפיים בלבד, ונטפל בה תוך 7 ימים.</p>
+
+  <p style="margin-top:28px"><a href="https://yosefdana1-png.github.io/inventory/privacy.html">מדיניות פרטיות</a> · <a href="support.html">תמיכה</a></p>
+
+  <div class="en">
+    <h2>Delete your account</h2>
+    <p>You can delete your account and all its data yourself on this page. To verify it's you, enter your username and password. <strong>Deletion is permanent.</strong></p>
+    <ul>
+      <li><strong>Deleted:</strong> the login account, display name, warehouses where you are the only member (with their items and photos), and personal settings.</li>
+      <li><strong>Shared warehouses</strong> with other members stay with them; only your membership is removed, and ownership passes to another member if you were the owner. History entries remain as plain text with no link to the account.</li>
+    </ul>
+    <p><strong>Can't sign in or forgot your password?</strong> Email <a href="mailto:danastudio.apps@gmail.com">danastudio.apps@gmail.com</a> with your username; we handle requests within 7 days. Because deletion is permanent and usernames are not secret, <strong>we may ask for proof that the account is yours</strong> (for example details about the warehouses and items you created). <strong>If we can't verify ownership, we will decline to delete the account</strong>, so nobody can delete an account that isn't theirs.</p>
+    <p><strong>Partial deletion:</strong> you can delete photos, items and your own private warehouses, or leave shared ones, inside the app at any time — or email us to delete specific data only, without closing the account.</p>
+  </div>
+</main>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, get, remove, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+import { initializeAuth, inMemoryPersistence, signInWithEmailAndPassword, deleteUser, signOut } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const app = initializeApp({
+  apiKey: "AIzaSyB01z8Qw-wxnVuHnOEiHdhrtCo_SEUKn5U",
+  authDomain: "inventory-app-d539d.firebaseapp.com",
+  databaseURL: "https://inventory-app-d539d-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "inventory-app-d539d"
+}, "delete-account");
+const db = getDatabase(app);
+// In-memory only: this page shares its origin with the web app and must not touch the app's saved session.
+const auth = initializeAuth(app, { persistence: inMemoryPersistence });
+
+// Must match index.html exactly (login encoding).
+const b32enc=bytes=>{const A="abcdefghijklmnopqrstuvwxyz234567";let bits=0,val=0,out="";for(const b of bytes){val=(val<<8)|b;bits+=8;while(bits>=5){out+=A[(val>>>(bits-5))&31];bits-=5}}if(bits>0)out+=A[(val<<(5-bits))&31];return out};
+const emailForUsername=u=>/^[a-z0-9._-]+$/.test(u)?`${u}@inv-user.app`:`u-${b32enc(new TextEncoder().encode(u))}@inv-user.app`;
+const authPw=p=>p.length>=6?p:p+"0".repeat(6-p.length);
+
+const $=id=>document.getElementById(id);
+const msg=(t,ok)=>{$("msg").textContent=t;$("msg").className=ok?"ok":""};
+const log=t=>{const li=document.createElement("li");li.textContent=t;$("log").appendChild(li)};
+const dbGet=async p=>{const s=await get(ref(db,p));return s.exists()?s.val():null};
+
+let user=null, username="", plan=[];
+
+function sync1(){$("go").disabled=!($("u").value.trim()&&$("p").value)}
+function sync2(){$("del").disabled=!$("ok").checked}
+$("u").addEventListener("input",sync1);
+$("p").addEventListener("input",sync1);
+$("ok").addEventListener("change",sync2);
+
+async function reset(){
+  try{await signOut(auth)}catch(_){}
+  user=null;plan=[];
+  $("step2").style.display="none";$("step1").style.display="";
+  $("p").value="";$("ok").checked=false;sync1();sync2();
+}
+$("back").addEventListener("click",()=>{msg("");reset()});
+
+// Step 1: verify the credentials and show what will happen.
+$("go").addEventListener("click",async()=>{
+  username=$("u").value.trim().toLowerCase();
+  $("go").disabled=true; msg("בודק...");
+  try{
+    const cred=await signInWithEmailAndPassword(auth,emailForUsername(username),authPw($("p").value));
+    user=cred.user;
+  }catch(e){
+    const c=e.code||"";
+    if(c==="auth/network-request-failed")msg("שגיאה בחיבור, נסו שוב.");
+    else if(c==="auth/too-many-requests")msg("יותר מדי ניסיונות. נסו שוב בעוד כמה דקות.");
+    else msg("שם משתמש או סיסמה שגויים.");
+    sync1(); return;
+  }
+  try{
+    const links=await dbGet(`users/${username}/warehouses`)||{};
+    plan=[];
+    for(const whId of Object.keys(links)){
+      let wh=null;
+      try{wh=await dbGet(`warehouses/${whId}`)}catch(e){wh=null}
+      if(!wh){plan.push({whId,kind:"stale",name:whId});continue}
+      const others=Object.keys(wh.members||{}).filter(m=>m!==username);
+      if(others.length===0)plan.push({whId,kind:"sole",name:wh.name||whId,invites:Object.keys(wh.invites||{})});
+      else plan.push({whId,kind:"shared",name:wh.name||whId,transferTo:wh.owner===username?others[0]:null});
+    }
+  }catch(e){
+    console.error(e);
+    msg("לא הצלחנו לקרוא את נתוני החשבון. נסו שוב.");
+    await reset(); return;
+  }
+  $("who").textContent=username;
+  $("plan").innerHTML="";
+  const add=t=>{const li=document.createElement("li");li.textContent=t;$("plan").appendChild(li)};
+  for(const w of plan){
+    if(w.kind==="sole")add(`יימחק המחסן "${w.name}" על כל הפריטים והתמונות שבו (אתם החבר היחיד).`);
+    else if(w.kind==="shared")add(`תוסר החברות שלכם במחסן המשותף "${w.name}"`+(w.transferTo?" והבעלות תעבור לחבר אחר.":"."));
+  }
+  add("יימחקו שם התצוגה, ההגדרות האישיות וחשבון ההתחברות.");
+  msg("");
+  $("step1").style.display="none";$("step2").style.display="block";
+});
+
+// Step 2: delete.
+$("del").addEventListener("click",async()=>{
+  $("del").disabled=true;$("back").disabled=true;$("log").innerHTML="";
+  msg("מוחק... אל תסגרו את העמוד.");
+  try{
+    for(const w of plan){
+      const wh=w.whId;
+      if(w.kind==="sole"){
+        // Drop invitations this warehouse sent, then images BEFORE the warehouse node (rules key off membership).
+        for(const t of (w.invites||[]))await remove(ref(db,`users/${t}/invites/${wh}`)).catch(()=>{});
+        await remove(ref(db,`itemImages/${wh}`)).catch(()=>{});
+        await remove(ref(db,`warehouses/${wh}`));
+        log(`נמחק מחסן: ${w.name}`);
+      }else if(w.kind==="shared"){
+        if(w.transferTo)await set(ref(db,`warehouses/${wh}/owner`),w.transferTo);
+        await remove(ref(db,`warehouses/${wh}/members/${username}`));
+        log(`הוסרה החברות מהמחסן המשותף: ${w.name}`);
+      }
+      await remove(ref(db,`users/${username}/warehouses/${wh}`)).catch(()=>{});
+    }
+    // Profile + identity mapping (users first: its rules depend on the mapping).
+    await remove(ref(db,`users/${username}`));
+    log("נמחקו פרטי הפרופיל וההגדרות");
+    await remove(ref(db,`usernames/${username}`));
+    await remove(ref(db,`uids/${user.uid}`));
+    await deleteUser(user);
+    log("נמחק חשבון ההתחברות");
+    msg("החשבון נמחק. תודה שהשתמשתם באפליקציה.",true);
+    $("del").style.display="none";$("back").style.display="none";
+    $("u").value="";$("p").value="";
+  }catch(e){
+    console.error(e);
+    msg("אירעה שגיאה באמצע המחיקה. אפשר לנסות שוב, או לכתוב אלינו ל-danastudio.apps@gmail.com ונשלים את המחיקה.");
+    $("back").disabled=false;
+    try{await signOut(auth)}catch(_){}
+  }
+});
+</script>
+</body>
+</html>
