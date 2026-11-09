@@ -374,14 +374,22 @@ footer a { color: var(--muted); }
   .app-name { font-size: 24px; }
   .app-desc { margin-bottom: 24px; }
   .shots-box { margin: 26px 0 0; display: grid; justify-items: center; gap: 14px; }
-  .shots { margin: 0; padding: 0; overflow: visible; display: block; }
-  /* One large shot: the first one in the page's language */
+  /* One large shot, inside Apple's iPhone frame (assets/iphone-frame.png, 1350x2760;
+     its screen opening is 1206x2622 at 72,69) */
+  .shots {
+    position: relative; display: block; overflow: visible;
+    width: 230px; margin: 0; padding: 0; aspect-ratio: 1350 / 2760;
+    filter: drop-shadow(0 18px 24px rgba(0, 0, 0, .22));
+  }
+  .shots::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: url(iphone-frame.png) center / 100% 100% no-repeat;
+  }
+  /* The first shot in the page's language */
   .shots img:not([data-l]):not(:first-child), .shots img:nth-child(n+3) { display: none; }
   .shots img {
-    width: 210px; border-radius: 30px;
-    border: 7px solid #111; background: #111;
-    box-shadow: 0 0 0 1px var(--line-strong), 0 18px 40px -18px color-mix(in srgb, var(--ink) 55%, transparent);
-    transition: transform .2s var(--ease);
+    position: absolute; left: 5.333%; top: 2.5%; width: 89.333%; height: 95%;
+    aspect-ratio: auto; object-fit: cover; border-radius: 13.5% / 6.2%; box-shadow: none;
   }
   .shots-all {
     display: inline-flex; align-items: center; min-height: 36px; padding: 6px 16px;
@@ -431,7 +439,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .pill:focus-visible { border-radius: 999px; }
 .shots img:focus-visible, .shots-all:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 @media (hover: hover) {
-  .shots img:hover { transform: translateY(-2px); }
   .shots-all:hover { border-color: var(--ink); }
   a.store:hover, a.badge:hover { transform: translateY(-1px); box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--ink) 45%, transparent); }
   .pill:hover { border-color: var(--ink); background: var(--soft); }
