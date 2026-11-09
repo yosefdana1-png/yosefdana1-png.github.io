@@ -207,7 +207,7 @@ a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--accent) 4
 .shots {
   grid-column: 2; position: relative;
   width: 230px; aspect-ratio: 1350 / 2760;
-  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, .22));
+  filter: drop-shadow(0 8px 12px rgba(0, 0, 0, .16));
 }
 .shots::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
