@@ -197,25 +197,32 @@ a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--accent) 4
 .store.beta { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
 .store.beta small { color: var(--accent); opacity: 1; font-weight: 600; }
 .beta-note { margin: 12px 0 0; font-size: 14px; color: var(--muted); }
-/* Screenshots. Phone: a swipeable strip, always visible.
-   Wide screens: the first shot large in a phone frame, the rest one tap away.
-   Tapping a shot opens it large (site.js). */
-.shots-box, .shots-box:last-of-type { margin-top: 18px; padding: 0; border: 0; }
+/* Screenshots: the first one large inside Apple's iPhone frame, the rest one tap away.
+   Tapping a shot or the button opens them large (site.js). */
+.shots-box { margin: 22px 0 0; display: grid; justify-items: center; gap: 14px; }
+/* One large shot, inside Apple's iPhone frame (assets/iphone-frame.png, 1350x2760;
+   its screen opening is 1206x2622 at 72,69) */
 .shots {
-  display: flex; gap: 10px;
-  margin: 0 -22px; padding: 2px 22px 4px;
-  overflow-x: auto; overscroll-behavior-x: contain;
-  scroll-snap-type: x mandatory; scroll-padding-inline: 22px;
-  scrollbar-width: none;
+  position: relative; display: block; overflow: visible;
+  width: 230px; margin: 0; padding: 0; aspect-ratio: 1350 / 2760;
+  filter: drop-shadow(0 18px 24px rgba(0, 0, 0, .22));
 }
-.shots::-webkit-scrollbar { display: none; }
+.shots::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: url(iphone-frame.png) center / 100% 100% no-repeat;
+}
+/* The first shot in the page's language */
+.shots img:not([data-l]):not(:first-child), .shots img:nth-child(n+3) { display: none; }
 .shots img {
-  flex: none; width: 138px; height: auto; aspect-ratio: 414 / 900;
-  border-radius: 16px; scroll-snap-align: start; cursor: zoom-in;
-  background: var(--soft);
-  box-shadow: 0 0 0 1px var(--line);
+  position: absolute; left: 5.333%; top: 2.5%; width: 89.333%; height: 95%;
+  aspect-ratio: auto; object-fit: cover; border-radius: 13.5% / 6.2%; box-shadow: none;
+  cursor: zoom-in;
 }
-.shots-all { display: none; }
+.shots-all {
+  display: inline-flex; align-items: center; min-height: 36px; padding: 6px 16px;
+  border: 1px solid var(--line-strong); border-radius: 999px; background: transparent;
+  color: var(--ink); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+}
 
 /* Large view of one screenshot */
 .viewer {
@@ -373,29 +380,6 @@ footer a { color: var(--muted); }
   .app-head { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 12px; }
   .app-name { font-size: 24px; }
   .app-desc { margin-bottom: 24px; }
-  .shots-box { margin: 26px 0 0; display: grid; justify-items: center; gap: 14px; }
-  /* One large shot, inside Apple's iPhone frame (assets/iphone-frame.png, 1350x2760;
-     its screen opening is 1206x2622 at 72,69) */
-  .shots {
-    position: relative; display: block; overflow: visible;
-    width: 230px; margin: 0; padding: 0; aspect-ratio: 1350 / 2760;
-    filter: drop-shadow(0 18px 24px rgba(0, 0, 0, .22));
-  }
-  .shots::after {
-    content: ""; position: absolute; inset: 0; pointer-events: none;
-    background: url(iphone-frame.png) center / 100% 100% no-repeat;
-  }
-  /* The first shot in the page's language */
-  .shots img:not([data-l]):not(:first-child), .shots img:nth-child(n+3) { display: none; }
-  .shots img {
-    position: absolute; left: 5.333%; top: 2.5%; width: 89.333%; height: 95%;
-    aspect-ratio: auto; object-fit: cover; border-radius: 13.5% / 6.2%; box-shadow: none;
-  }
-  .shots-all {
-    display: inline-flex; align-items: center; min-height: 36px; padding: 6px 16px;
-    border: 1px solid var(--line-strong); border-radius: 999px; background: transparent;
-    color: var(--ink); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
-  }
   .app-links { margin-top: auto; padding-top: 18px; }
 
   /* Same zones at the same height in all three cards, however long each text is:
