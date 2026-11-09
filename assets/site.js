@@ -82,6 +82,11 @@
       openViewer(shot);
       return;
     }
+    var all = e.target.closest('.shots-all');
+    if (all) {
+      openViewer(all.parentNode.querySelector('.shots img'));
+      return;
+    }
     if (e.target.closest('[data-toggle-theme]')) {
       var theme = currentTheme() === 'dark' ? 'light' : 'dark';
       applyTheme(theme);
@@ -90,16 +95,6 @@
   });
 
   // ===== Screenshots =====
-  // Always open on wide screens; on phones they stay folded until tapped.
-  var wide = window.matchMedia('(min-width: 900px)');
-  function openShotsOnWide() {
-    if (!wide.matches) return;
-    var boxes = document.querySelectorAll('.shots-box');
-    for (var i = 0; i < boxes.length; i++) boxes[i].open = true;
-  }
-  document.addEventListener('DOMContentLoaded', openShotsOnWide);
-  wide.addEventListener('change', openShotsOnWide);
-
   // Screenshots open with the keyboard too: Tab to one, then Enter or Space.
   document.addEventListener('DOMContentLoaded', function () {
     var imgs = document.querySelectorAll('.shots img');
@@ -179,11 +174,13 @@
     viewer.querySelector('.v-prev').setAttribute('aria-label', t.prev);
     viewer.querySelector('.v-next').setAttribute('aria-label', t.next);
 
+    // Every shot of this app in the page's language, also the ones hidden on wide screens
     shots = Array.prototype.filter.call(img.parentNode.querySelectorAll('img'), function (el) {
-      return el.offsetParent !== null;
+      var l = el.getAttribute('data-l');
+      return !l || l === root.lang;
     });
     viewer.classList.toggle('single', shots.length < 2);
-    show(shots.indexOf(img));
+    show(Math.max(0, shots.indexOf(img)));
     viewer.showModal();
   }
 
