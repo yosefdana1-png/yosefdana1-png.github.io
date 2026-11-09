@@ -82,11 +82,6 @@
       openViewer(shot);
       return;
     }
-    var all = e.target.closest('.shots-all');
-    if (all) {
-      openViewer(all.parentNode.querySelector('.shots img'));
-      return;
-    }
     if (e.target.closest('[data-toggle-theme]')) {
       var theme = currentTheme() === 'dark' ? 'light' : 'dark';
       applyTheme(theme);
@@ -95,6 +90,77 @@
   });
 
   // ===== Screenshots =====
+  // One shot at a time inside the phone frame: swipe on the phone, or use the
+  // arrows (mouse, keyboard) and the dots under it.
+  var DOT_LABEL = { he: 'צילום מסך {n} מתוך {t}', en: 'Screenshot {n} of {t}' };
+  function setupCarousel(box) {
+    var screen = box.querySelector('.shots-screen');
+    if (!screen) return;
+    var prev = document.createElement('button');
+    var next = document.createElement('button');
+    prev.type = next.type = 'button';
+    prev.className = 'shots-nav prev'; next.className = 'shots-nav next';
+    prev.innerHTML = next.innerHTML = CHEVRON;
+    var dots = document.createElement('div');
+    dots.className = 'shots-dots';
+    box.insertBefore(prev, box.firstChild);
+    box.appendChild(next);
+    box.appendChild(dots);
+
+    function visible() {
+      return Array.prototype.filter.call(screen.querySelectorAll('img'), function (el) {
+        var l = el.getAttribute('data-l');
+        return !l || l === root.lang;
+      });
+    }
+    function current() {
+      return Math.round(Math.abs(screen.scrollLeft) / (screen.clientWidth || 1));
+    }
+    function go(i) {
+      var imgs = visible();
+      i = Math.max(0, Math.min(imgs.length - 1, i));
+      var delta = imgs[i].getBoundingClientRect().left - screen.getBoundingClientRect().left;
+      screen.scrollBy({ left: delta, behavior: reduceMotion.matches ? 'auto' : 'smooth' });
+    }
+    function render() {
+      var imgs = visible(), t = LABELS[root.lang] || LABELS.he;
+      var dl = DOT_LABEL[root.lang] || DOT_LABEL.he;
+      if (dots.children.length !== imgs.length) {
+        dots.innerHTML = '';
+        imgs.forEach(function (img, n) {
+          var d = document.createElement('button');
+          d.type = 'button';
+          d.addEventListener('click', function () { go(n); });
+          dots.appendChild(d);
+        });
+      }
+      var i = current();
+      Array.prototype.forEach.call(dots.children, function (d, n) {
+        d.setAttribute('aria-label', dl.replace('{n}', n + 1).replace('{t}', imgs.length));
+        d.setAttribute('aria-current', n === i ? 'true' : 'false');
+      });
+      prev.setAttribute('aria-label', t.prev);
+      next.setAttribute('aria-label', t.next);
+      prev.disabled = i <= 0;
+      next.disabled = i >= imgs.length - 1;
+    }
+    prev.addEventListener('click', function () { go(current() - 1); });
+    next.addEventListener('click', function () { go(current() + 1); });
+    var pending;
+    screen.addEventListener('scroll', function () {
+      cancelAnimationFrame(pending);
+      pending = requestAnimationFrame(render);
+    }, { passive: true });
+    // Language switch: other shots, other labels; start again from the first one
+    new MutationObserver(function () { screen.scrollLeft = 0; render(); })
+      .observe(root, { attributes: true, attributeFilter: ['lang'] });
+    render();
+  }
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  document.addEventListener('DOMContentLoaded', function () {
+    Array.prototype.forEach.call(document.querySelectorAll('.shots-box'), setupCarousel);
+  });
+
   // Screenshots open with the keyboard too: Tab to one, then Enter or Space.
   document.addEventListener('DOMContentLoaded', function () {
     var imgs = document.querySelectorAll('.shots img');

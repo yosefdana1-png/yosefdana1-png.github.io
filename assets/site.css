@@ -197,32 +197,54 @@ a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--accent) 4
 .store.beta { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
 .store.beta small { color: var(--accent); opacity: 1; font-weight: 600; }
 .beta-note { margin: 12px 0 0; font-size: 14px; color: var(--muted); }
-/* Screenshots: the first one large inside Apple's iPhone frame, the rest one tap away.
-   Tapping a shot or the button opens them large (site.js). */
-.shots-box { margin: 22px 0 0; display: grid; justify-items: center; gap: 14px; }
-/* One large shot, inside Apple's iPhone frame (assets/iphone-frame.png, 1350x2760;
-   its screen opening is 1206x2622 at 72,69) */
+/* Screenshots: one at a time inside Apple's iPhone frame (assets/iphone-frame.png, 1350x2760;
+   its screen opening is 1206x2622 at 72,69). Swipe on the phone, or use the arrows
+   and dots (added by site.js). Tapping a shot opens it large. */
+.shots-box {
+  margin: 22px 0 0; display: grid; grid-template-columns: auto auto auto;
+  justify-content: center; align-items: center; column-gap: 10px; row-gap: 14px;
+}
 .shots {
-  position: relative; display: block; overflow: visible;
-  width: 230px; margin: 0; padding: 0; aspect-ratio: 1350 / 2760;
+  grid-column: 2; position: relative;
+  width: 230px; aspect-ratio: 1350 / 2760;
   filter: drop-shadow(0 18px 24px rgba(0, 0, 0, .22));
 }
 .shots::after {
   content: ""; position: absolute; inset: 0; pointer-events: none;
   background: url(iphone-frame.png) center / 100% 100% no-repeat;
 }
-/* The first shot in the page's language */
-.shots img:not([data-l]):not(:first-child), .shots img:nth-child(n+3) { display: none; }
-.shots img {
+.shots-screen {
   position: absolute; left: 5.333%; top: 2.5%; width: 89.333%; height: 95%;
-  aspect-ratio: auto; object-fit: cover; border-radius: 13.5% / 6.2%; box-shadow: none;
-  cursor: zoom-in;
+  border-radius: 13.5% / 6.2%; overflow-x: auto; overflow-y: hidden;
+  display: flex; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+  scrollbar-width: none; background: #000;
 }
-.shots-all {
-  display: inline-flex; align-items: center; min-height: 36px; padding: 6px 16px;
-  border: 1px solid var(--line-strong); border-radius: 999px; background: transparent;
-  color: var(--ink); font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
+.shots-screen::-webkit-scrollbar { display: none; }
+.shots-screen img {
+  flex: none; width: 100%; height: 100%; object-fit: cover;
+  scroll-snap-align: start; cursor: zoom-in;
 }
+.shots-nav {
+  display: grid; place-items: center; width: 38px; height: 38px; padding: 0;
+  border: 1px solid var(--line-strong); border-radius: 50%; background: var(--paper);
+  color: var(--ink); cursor: pointer; transition: border-color .2s var(--ease), opacity .2s var(--ease);
+}
+.shots-nav svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.shots-nav.prev { grid-column: 1; grid-row: 1; }
+.shots-nav.next { grid-column: 3; grid-row: 1; }
+/* The chevron points left; flip it on whichever side points right */
+:root[dir="ltr"] .shots-nav.next svg, :root[dir="rtl"] .shots-nav.prev svg { transform: scaleX(-1); }
+.shots-nav:disabled { opacity: .3; cursor: default; }
+.shots-dots { grid-column: 1 / -1; display: flex; justify-content: center; gap: 2px; }
+.shots-dots button {
+  width: 22px; height: 22px; padding: 0; border: 0; background: none; cursor: pointer;
+  display: grid; place-items: center;
+}
+.shots-dots button::before {
+  content: ""; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--line-strong); transition: background-color .2s var(--ease), width .2s var(--ease);
+}
+.shots-dots button[aria-current="true"]::before { width: 18px; border-radius: 4px; background: var(--ink); }
 
 /* Large view of one screenshot */
 .viewer {
@@ -421,9 +443,10 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 .badge:focus-visible, .store:focus-visible { border-radius: 9px; }
 .pill:focus-visible { border-radius: 999px; }
-.shots img:focus-visible, .shots-all:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.shots img:focus-visible { outline: 3px solid var(--accent); outline-offset: -3px; }
+.shots-nav:focus-visible, .shots-dots button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 @media (hover: hover) {
-  .shots-all:hover { border-color: var(--ink); }
+  .shots-nav:not(:disabled):hover { border-color: var(--ink); }
   a.store:hover, a.badge:hover { transform: translateY(-1px); box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--ink) 45%, transparent); }
   .pill:hover { border-color: var(--ink); background: var(--soft); }
   .page-nav a:not([aria-current]):hover, .app-links a:hover { color: var(--ink); }
