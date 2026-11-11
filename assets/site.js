@@ -143,6 +143,42 @@
     items[(i + items.length) % items.length].focus();
   });
 
+  // ===== Motion =====
+  // Sections fade and rise into view as you scroll. Off with "reduce motion",
+  // and without IntersectionObserver everything simply shows.
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (!still.matches && 'IntersectionObserver' in window) root.classList.add('motion');
+  function setupReveal() {
+    var marks = [];
+    Array.prototype.forEach.call(document.querySelectorAll('.home-head > *'), function (el, i) {
+      el.style.setProperty('--delay', (i * 0.12) + 's');
+      marks.push(el);
+    });
+    Array.prototype.forEach.call(document.querySelectorAll('.app-text, .shots-box'), function (el) {
+      if (el.classList.contains('shots-box')) el.style.setProperty('--delay', '.15s');
+      marks.push(el);
+    });
+    marks.forEach(function (el) { el.setAttribute('data-reveal', ''); });
+    if (!root.classList.contains('motion')) {
+      marks.forEach(function (el) { el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        en.target.classList.add('in');
+        io.unobserve(en.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
+    marks.forEach(function (el) { io.observe(el); });
+  }
+  document.addEventListener('DOMContentLoaded', setupReveal);
+
+  // The top bar gets a hairline under it once the page scrolls
+  function onScroll() { root.classList.toggle('scrolled', window.scrollY > 8); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  document.addEventListener('DOMContentLoaded', onScroll);
+
   // ===== Buttons =====
   document.addEventListener('click', function (e) {
     var langLink = e.target.closest('[data-set-lang]');
