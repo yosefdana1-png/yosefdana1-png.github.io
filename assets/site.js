@@ -44,24 +44,104 @@
   applyLang(fromHash() || (LANGS[saved] ? saved : 'he'));
 
   // ===== Theme =====
-  // Follows the device until the visitor picks one; the choice is remembered.
+  // Light, dark or automatic (follows the device). Automatic until the visitor picks;
+  // the choice is remembered. The button opens a small menu with the three options.
   var COLORS = { light: '#FFFFFF', dark: '#0A0A0A' };
-  var system = window.matchMedia('(prefers-color-scheme: dark)');
+  var CHOICES = ['light', 'dark', 'auto'];
 
-  function currentTheme() {
-    return root.getAttribute('data-theme') || (system.matches ? 'dark' : 'light');
-  }
-  function applyTheme(theme) {
-    root.setAttribute('data-theme', theme);
+  function applyTheme(choice) {
+    root.setAttribute('data-theme-choice', choice);
+    if (choice === 'auto') root.removeAttribute('data-theme');
+    else root.setAttribute('data-theme', choice);
+    // The address-bar color: fixed for light / dark, by device setting for automatic
     var metas = document.querySelectorAll('meta[name="theme-color"]');
     for (var i = 0; i < metas.length; i++) {
-      metas[i].removeAttribute('media');
-      metas[i].setAttribute('content', COLORS[theme]);
+      var m = metas[i];
+      if (!m.hasAttribute('data-media')) {
+        m.setAttribute('data-media', m.getAttribute('media') || '');
+        m.setAttribute('data-content', m.getAttribute('content'));
+      }
+      if (choice === 'auto') {
+        m.setAttribute('media', m.getAttribute('data-media'));
+        m.setAttribute('content', m.getAttribute('data-content'));
+      } else {
+        m.removeAttribute('media');
+        m.setAttribute('content', COLORS[choice]);
+      }
+    }
+    var items = document.querySelectorAll('.theme-menu [data-theme-pick]');
+    for (var j = 0; j < items.length; j++) {
+      items[j].setAttribute('aria-checked', items[j].getAttribute('data-theme-pick') === choice ? 'true' : 'false');
     }
   }
 
   var savedTheme = load('theme');
-  if (COLORS[savedTheme]) applyTheme(savedTheme);
+  applyTheme(CHOICES.indexOf(savedTheme) >= 0 ? savedTheme : 'auto');
+
+  var ICON_AUTO = '<svg class="i-auto" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 3.5a8.5 8.5 0 0 1 0 17z" fill="currentColor" stroke="none"/></svg>';
+  var ICON_SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>';
+  var ICON_MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>';
+  var CHECK = '<svg class="check" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var MENU_ITEMS = [
+    ['light', ICON_SUN, 'בהיר', 'Light'],
+    ['dark', ICON_MOON, 'כהה', 'Dark'],
+    ['auto', ICON_AUTO, 'אוטומטי', 'Automatic']
+  ];
+
+  function buildThemeMenus() {
+    var btns = document.querySelectorAll('[data-toggle-theme]');
+    for (var i = 0; i < btns.length; i++) {
+      var btn = btns[i];
+      btn.insertAdjacentHTML('beforeend', ICON_AUTO);
+      btn.setAttribute('aria-haspopup', 'true');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.setAttribute('aria-label', 'מצב תצוגה');
+      btn.setAttribute('data-aria-en', 'Appearance');
+      var wrap = document.createElement('span');
+      wrap.className = 'theme-wrap';
+      btn.parentNode.insertBefore(wrap, btn);
+      wrap.appendChild(btn);
+      var menu = document.createElement('div');
+      menu.className = 'theme-menu';
+      menu.setAttribute('role', 'menu');
+      menu.hidden = true;
+      menu.innerHTML = MENU_ITEMS.map(function (it) {
+        return '<button type="button" role="menuitemradio" data-theme-pick="' + it[0] + '">' + it[1] +
+          '<span data-l="he">' + it[2] + '</span><span data-l="en" lang="en">' + it[3] + '</span>' + CHECK + '</button>';
+      }).join('');
+      wrap.appendChild(menu);
+    }
+    applyTheme(root.getAttribute('data-theme-choice'));
+    localizeAlts();
+  }
+  document.addEventListener('DOMContentLoaded', buildThemeMenus);
+
+  function openMenu(btn, open) {
+    var menu = btn.parentNode.querySelector('.theme-menu');
+    menu.hidden = !open;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) {
+      var checked = menu.querySelector('[aria-checked="true"]') || menu.querySelector('button');
+      checked.focus();
+    }
+  }
+  function closeMenus(returnFocus) {
+    var open = document.querySelectorAll('.theme-menu:not([hidden])');
+    for (var i = 0; i < open.length; i++) {
+      var btn = open[i].parentNode.querySelector('[data-toggle-theme]');
+      openMenu(btn, false);
+      if (returnFocus) btn.focus();
+    }
+  }
+  document.addEventListener('keydown', function (e) {
+    var menu = e.target.closest && e.target.closest('.theme-menu');
+    if (e.key === 'Escape') { closeMenus(true); return; }
+    if (!menu || (e.key !== 'ArrowDown' && e.key !== 'ArrowUp')) return;
+    e.preventDefault();
+    var items = Array.prototype.slice.call(menu.querySelectorAll('button'));
+    var i = items.indexOf(e.target) + (e.key === 'ArrowDown' ? 1 : -1);
+    items[(i + items.length) % items.length].focus();
+  });
 
   // ===== Buttons =====
   document.addEventListener('click', function (e) {
@@ -82,11 +162,22 @@
       openViewer(shot);
       return;
     }
-    if (e.target.closest('[data-toggle-theme]')) {
-      var theme = currentTheme() === 'dark' ? 'light' : 'dark';
-      applyTheme(theme);
-      save('theme', theme);
+    var pick = e.target.closest('[data-theme-pick]');
+    if (pick) {
+      var choice = pick.getAttribute('data-theme-pick');
+      applyTheme(choice);
+      save('theme', choice);
+      closeMenus(true);
+      return;
     }
+    var themeBtn = e.target.closest('[data-toggle-theme]');
+    if (themeBtn) {
+      var isOpen = themeBtn.getAttribute('aria-expanded') === 'true';
+      closeMenus(false);
+      if (!isOpen) openMenu(themeBtn, true);
+      return;
+    }
+    if (!e.target.closest('.theme-menu')) closeMenus(false);
   });
 
   // ===== Screenshots =====
