@@ -124,10 +124,11 @@ a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--accent) 4
 .home-link .mark {
   width: 28px; height: 28px; border-radius: 50%; flex: none;
   display: grid; place-items: center;
-  background: #111111; color: #D2AE62;
-  font-family: "Frank Ruhl Libre", Georgia, serif; font-weight: 700; font-size: 17px; line-height: 1;
+  background: #141414;
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--ink) 14%, transparent);
 }
+/* The logo: a Hebrew dalet (ד) in gold */
+.home-link .mark svg { width: 20px; height: 20px; fill: none; stroke: #D2AE62; stroke-width: 8; stroke-linecap: round; }
 .theme-btn { width: 40px; padding: 0; }
 /* The theme button shows the current choice: sun, moon or half circle (automatic) */
 .theme-btn svg { display: none; }
