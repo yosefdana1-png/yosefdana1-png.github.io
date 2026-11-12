@@ -170,7 +170,7 @@ a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--accent) 4
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 
 /* ===== Home: header ===== */
-.home-head { text-align: center; margin: 36px 0 56px; }
+.home-head { text-align: center; margin: 32px 0 24px; }
 .brand {
   font-size: clamp(30px, 8.4vw, 72px);
   line-height: 1.1;
@@ -207,6 +207,7 @@ a { color: var(--ink); text-decoration-color: color-mix(in srgb, var(--accent) 4
   background: var(--band);
   display: grid; gap: 40px; justify-items: center;
 }
+.app:first-child { padding-top: 40px; }
 .app:nth-child(even) { --band: color-mix(in srgb, var(--accent) 5%, var(--soft)); }
 .app-text { width: 100%; max-width: 520px; }
 .app-head { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
@@ -441,10 +442,15 @@ details ul { color: var(--muted); }
 }
 .not-found .store { width: auto; display: inline-flex; padding: 6px 22px; }
 
-/* ===== Footer ===== */
-footer { text-align: center; margin-top: 44px; color: var(--muted); font-size: 15px; }
-footer p { margin: 6px 0; }
-footer a { color: var(--muted); }
+/* ===== Footer: every app's pages, contact and accessibility, on every page ===== */
+footer { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+.foot-nav { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 20px; }
+.foot-nav div { display: grid; gap: 8px; align-content: start; }
+.foot-nav a { color: var(--muted); text-decoration: none; transition: color .2s var(--ease); }
+.foot-nav a:hover { color: var(--ink); text-decoration: underline; }
+.foot-nav .foot-app { color: var(--ink); font-weight: 700; font-size: 15px; }
+.foot-copy { margin: 32px 0 0; font-size: 13px; }
+:root[dir="rtl"] .foot-copy { text-align: right; }
 
 /* ===== Wide screens (computer, landscape tablet) ===== */
 @media (min-width: 900px) {
@@ -455,12 +461,13 @@ footer a { color: var(--muted); }
   .app-nav a:hover { color: var(--ink); }
 
   /* Home: text and phone side by side; the phone switches sides from band to band */
-  .home-head { margin: 56px 0 88px; }
+  .home-head { margin: 40px 0 16px; }
   .apps { margin: 0 calc(50% - 50vw); }
   .app {
     padding: 104px max(40px, calc(50vw - 560px));
     grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 72px;
   }
+  .app:first-child { padding-top: 56px; }
   .app:nth-child(even) .shots-box { order: -1; }
   .app-text { max-width: 560px; justify-self: start; }
   .app:nth-child(even) .app-text { justify-self: end; }
@@ -480,7 +487,8 @@ footer a { color: var(--muted); }
   .page-side .page-nav a[aria-current="page"] { border-inline-start-color: var(--accent); }
   .page-body > :first-child { margin-top: 0; }
   .page-body > h2:first-child { margin-top: 0; }
-  footer { margin-top: 72px; }
+  footer { margin-top: 80px; }
+  .foot-nav { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
 ::selection { background: color-mix(in srgb, var(--accent) 25%, transparent); color: var(--ink); }

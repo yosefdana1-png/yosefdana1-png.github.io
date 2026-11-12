@@ -23,7 +23,7 @@
 <meta property="og:title" content="Dana Studio | דנה סטודיו">
 <meta property="og:description" content="אפליקציות בעברית לאייפון ולאנדרואיד: ניהול מלאי, מילים ו-Ringo.">
 <meta property="og:url" content="https://danastudio.app/">
-<meta property="og:image" content="https://danastudio.app/assets/share/home.png">
+<meta property="og:image" content="https://danastudio.app/assets/share/home.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Dana Studio | דנה סטודיו">
@@ -96,7 +96,7 @@
       </div>
       <div class="shots-box">
         <div class="shots"><div class="shots-screen">
-          <img src="inventory/screens/1.jpg" srcset="inventory/screens/1.jpg 414w, inventory/screens/1-large.jpg 828w" sizes="206px" data-alt-en="The items in a stockroom, with quantities" data-full="inventory/screens/1-large.jpg" alt="רשימת הפריטים במחסן, עם הכמויות" width="414" height="900" loading="lazy" decoding="async">
+          <img src="inventory/screens/1.jpg" srcset="inventory/screens/1.jpg 414w, inventory/screens/1-large.jpg 828w" sizes="206px" data-alt-en="The items in a stockroom, with quantities" data-full="inventory/screens/1-large.jpg" alt="רשימת הפריטים במחסן, עם הכמויות" width="414" height="900" loading="eager" fetchpriority="high" decoding="async">
           <img src="inventory/screens/2.jpg" srcset="inventory/screens/2.jpg 414w, inventory/screens/2-large.jpg 828w" sizes="206px" data-alt-en="The list of stockrooms" data-full="inventory/screens/2-large.jpg" alt="רשימת המחסנים" width="414" height="900" loading="lazy" decoding="async">
           <img src="inventory/screens/3.jpg" srcset="inventory/screens/3.jpg 414w, inventory/screens/3-large.jpg 828w" sizes="206px" data-alt-en="Adding stock to an item" data-full="inventory/screens/3-large.jpg" alt="הוספת כמות לפריט" width="414" height="900" loading="lazy" decoding="async">
           <img src="inventory/screens/4.jpg" srcset="inventory/screens/4.jpg 414w, inventory/screens/4-large.jpg 828w" sizes="206px" data-alt-en="Stockroom settings and sharing" data-full="inventory/screens/4-large.jpg" alt="הגדרות מחסן ושיתוף" width="414" height="900" loading="lazy" decoding="async">
@@ -184,9 +184,13 @@
   </main>
 
   <footer>
-    <p><span data-l="he">שאלות ותמיכה:</span><span data-l="en" lang="en">Questions and support:</span> <a href="mailto:danastudio.apps@gmail.com" class="ltr">danastudio.apps@gmail.com</a></p>
-    <p><a href="accessibility.html"><span data-l="he">הצהרת נגישות</span><span data-l="en" lang="en">Accessibility statement</span></a></p>
-    <p dir="ltr">© 2026 Yosef Dana</p>
+    <nav class="foot-nav" aria-label="קישורים באתר" data-aria-en="Site links">
+      <div><a class="foot-app" href="/#inventory"><span data-l="he">ניהול מלאי</span><span data-l="en" lang="en">Inventory Manager</span></a><a href="/inventory/privacy.html"><span data-l="he">מדיניות פרטיות</span><span data-l="en" lang="en">Privacy policy</span></a><a href="/inventory/support.html"><span data-l="he">תמיכה</span><span data-l="en" lang="en">Support</span></a><a href="/inventory/delete-account.html"><span data-l="he">מחיקת חשבון</span><span data-l="en" lang="en">Delete account</span></a></div>
+      <div><a class="foot-app" href="/#milim"><span data-l="he">מילים</span><span data-l="en" lang="en">Milim</span></a><a href="/milim/privacy.html"><span data-l="he">מדיניות פרטיות</span><span data-l="en" lang="en">Privacy policy</span></a><a href="/milim/support.html"><span data-l="he">תמיכה</span><span data-l="en" lang="en">Support</span></a></div>
+      <div><a class="foot-app" href="/#ringo">Ringo</a><a href="/ringo/privacy.html"><span data-l="he">מדיניות פרטיות</span><span data-l="en" lang="en">Privacy policy</span></a><a href="/ringo/support.html"><span data-l="he">תמיכה</span><span data-l="en" lang="en">Support</span></a></div>
+      <div><span class="foot-app">Dana Studio</span><a href="mailto:danastudio.apps@gmail.com"><span data-l="he">צרו קשר</span><span data-l="en" lang="en">Contact us</span></a><a href="/accessibility.html"><span data-l="he">הצהרת נגישות</span><span data-l="en" lang="en">Accessibility statement</span></a></div>
+    </nav>
+    <p class="foot-copy" dir="ltr">© 2026 Yosef Dana</p>
   </footer>
 
 </div>
