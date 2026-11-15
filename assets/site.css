@@ -437,8 +437,8 @@ details ul { color: var(--muted); }
 .not-found h1 { font-size: 32px; line-height: 1.2; margin: 0 0 12px; }
 .not-found p { color: var(--muted); max-width: 46ch; margin: 0 auto 24px; }
 .not-found .nf-code {
-  font-family: "Frank Ruhl Libre", Georgia, serif; font-weight: 700;
-  font-size: 96px; line-height: 1; margin-bottom: 16px; color: var(--gold);
+  font-weight: 700; letter-spacing: -0.04em;
+  font-size: 112px; line-height: 1; margin-bottom: 16px; color: var(--gold);
 }
 .not-found .store { width: auto; display: inline-flex; padding: 6px 22px; }
 

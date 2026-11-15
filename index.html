@@ -6,9 +6,119 @@
 <title>דנה סטודיו | Dana Studio – האפליקציות</title>
 <meta name="description" content="דנה סטודיו (Dana Studio): אפליקציות בעברית לאייפון ולאנדרואיד – ניהול מלאי, מילים ו-Ringo.">
 <link rel="canonical" href="https://danastudio.app/">
-<!-- Tells search engines the site's name in both spellings, so "דנה סטודיו" finds it too. -->
+<!-- For search engines: the studio, the site (in both spellings, so "דנה סטודיו" finds it too) and the three apps. -->
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"Dana Studio","alternateName":["דנה סטודיו","DanaStudio"],"url":"https://danastudio.app/","inLanguage":["he","en"]}
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://danastudio.app/#studio",
+   "name": "Dana Studio",
+   "alternateName": "דנה סטודיו",
+   "url": "https://danastudio.app/",
+   "logo": "https://danastudio.app/apple-touch-icon.png",
+   "email": "danastudio.apps@gmail.com",
+   "founder": {
+    "@type": "Person",
+    "name": "Yosef Dana"
+   }
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://danastudio.app/#site",
+   "name": "Dana Studio",
+   "alternateName": [
+    "דנה סטודיו",
+    "DanaStudio"
+   ],
+   "url": "https://danastudio.app/",
+   "inLanguage": [
+    "he",
+    "en"
+   ],
+   "publisher": {
+    "@id": "https://danastudio.app/#studio"
+   }
+  },
+  {
+   "@type": "MobileApplication",
+   "@id": "https://danastudio.app/#inventory",
+   "name": "ניהול מלאי",
+   "alternateName": "Inventory Manager",
+   "description": "המלאי של העסק או של הבית, בטלפון. מוסיפים פריטים וכמויות, ומשתפים את המחסן עם מי שעובד איתך.",
+   "operatingSystem": "iOS, iPadOS, macOS, watchOS, Android",
+   "applicationCategory": "BusinessApplication",
+   "url": "https://danastudio.app/#inventory",
+   "downloadUrl": "https://apps.apple.com/il/app/%D7%9E%D7%9C%D7%90%D7%99-%D7%A0%D7%99%D7%94%D7%95%D7%9C-%D7%9E%D7%9C%D7%90%D7%99-%D7%9E%D7%A9%D7%95%D7%AA%D7%A3/id6809037961?l=he",
+   "installUrl": "https://apps.apple.com/il/app/%D7%9E%D7%9C%D7%90%D7%99-%D7%A0%D7%99%D7%94%D7%95%D7%9C-%D7%9E%D7%9C%D7%90%D7%99-%D7%9E%D7%A9%D7%95%D7%AA%D7%A3/id6809037961?l=he",
+   "image": "https://danastudio.app/inventory/icon.png",
+   "screenshot": "https://danastudio.app/inventory/screens/1-large.jpg",
+   "inLanguage": [
+    "he",
+    "en"
+   ],
+   "publisher": {
+    "@id": "https://danastudio.app/#studio"
+   },
+   "sameAs": "https://apps.apple.com/il/app/%D7%9E%D7%9C%D7%90%D7%99-%D7%A0%D7%99%D7%94%D7%95%D7%9C-%D7%9E%D7%9C%D7%90%D7%99-%D7%9E%D7%A9%D7%95%D7%AA%D7%A3/id6809037961?l=he"
+  },
+  {
+   "@type": "MobileApplication",
+   "@id": "https://danastudio.app/#milim",
+   "name": "מילים",
+   "alternateName": "Milim",
+   "description": "כתוביות בעברית לסרטונים, גם בחינם. עורכים את הכתוביות בקלות, ומוסיפים אפקטים, מדבקות וטקסט שזז עם הפריים.",
+   "operatingSystem": "iOS, iPadOS, macOS",
+   "applicationCategory": "MultimediaApplication",
+   "url": "https://danastudio.app/#milim",
+   "downloadUrl": "https://apps.apple.com/il/app/%D7%9E%D7%99%D7%9C%D7%99%D7%9D/id6809080946?l=he",
+   "installUrl": "https://apps.apple.com/il/app/%D7%9E%D7%99%D7%9C%D7%99%D7%9D/id6809080946?l=he",
+   "image": "https://danastudio.app/milim/icon.png",
+   "screenshot": "https://danastudio.app/milim/screens/he-4-large.jpg",
+   "inLanguage": [
+    "he",
+    "en"
+   ],
+   "publisher": {
+    "@id": "https://danastudio.app/#studio"
+   },
+   "sameAs": "https://apps.apple.com/il/app/%D7%9E%D7%99%D7%9C%D7%99%D7%9D/id6809080946?l=he",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  },
+  {
+   "@type": "MobileApplication",
+   "@id": "https://danastudio.app/#ringo",
+   "name": "Ringo: יוצר צלצולים",
+   "alternateName": "Ringo: Ringtone Maker",
+   "description": "כל שיר, סרטון או הודעה קולית, כצלצול לאייפון. חותכים בדיוק על גלי הקול, מוסיפים כניסה ויציאה הדרגתית, ומגדירים ישר כצלצול.",
+   "operatingSystem": "iOS",
+   "applicationCategory": "MultimediaApplication",
+   "url": "https://danastudio.app/#ringo",
+   "downloadUrl": "https://apps.apple.com/us/app/ringo-ringtone-maker/id6828183446",
+   "installUrl": "https://apps.apple.com/us/app/ringo-ringtone-maker/id6828183446",
+   "image": "https://danastudio.app/ringo/icon.png",
+   "screenshot": "https://danastudio.app/ringo/screens/he-3-large.jpg",
+   "inLanguage": [
+    "he",
+    "en"
+   ],
+   "publisher": {
+    "@id": "https://danastudio.app/#studio"
+   },
+   "sameAs": "https://apps.apple.com/us/app/ringo-ringtone-maker/id6828183446",
+   "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+   }
+  }
+ ]
+}
 </script>
 <meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)">
